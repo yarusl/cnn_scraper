@@ -1,11 +1,11 @@
 class Article: 
-    def __init__(self, title, author, date, url, img):
+    def __init__(self, title, text, date, url, img):
         self.title = title
-        self.author = author 
+        self.text = text
         self.date = date
         self.url = url
         self.img = img
-    
+
     def __str__(self):
         """ 
         returns a readable string 

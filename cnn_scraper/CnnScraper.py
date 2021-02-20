@@ -41,8 +41,7 @@ class CnnScraper:
         """
         next_page = '// *[ @ id = "lx-stream"] / div[2] / div / div[3] / a[1]'
 
-        #driver.page_source.encode("utf-8") -- reminder
-        page = self.driver.get(self.topic_url)
+        self.driver.get(self.topic_url)
         for p in range(1, self.pages_to_scrape + 1):
             self.articles += self.scrape_latest_updates()
             if p != self.pages_to_scrape:
@@ -51,13 +50,47 @@ class CnnScraper:
 
         return self.articles
 
+    def get_text(self, el_soup):
+        if el_soup is None:
+            return None
+        return el_soup.text
+
+    def get_url(self, el_soup):
+        if el_soup is None:
+            return None
+
+        return el_soup["href"]
+
+    def get_src(self, el_soup):
+        if el_soup is None:
+            return None
+
+        return el_soup["src"]
+
+    def get_date(self, el_soup):
+        if el_soup is None:
+            return None
+
+        return el_soup.text
+
     def scrape_latest_updates(self):
-        """ 
-        scrapes all articles from 
+        """
+        scrapes all articles from
         the 'Latest Updates' section
         """
         articles = []
+        soup = bs(self.driver.page_source, 'html.parser')
+        elements = soup.find_all("li", {"class": "lx-stream__post-container"})
+        for el_soup in elements:
+            title = el_soup.find("h3").a.span.text
+            text = self.get_text(el_soup.find("p", {"class": "lx-stream-related-story--summary"}))
+            date = self.get_date(el_soup.find("span", {"class": "qa-visually-hidden-meta"}))
+            url = self.get_url(el_soup.find("a", {"class": "qa-story-cta-link"}))
+            img = self.get_src(el_soup.find("img", {"class": "lx-stream-related-story--index-image"}))
+            articles.append(Article(title, text, date, url, img))
+
         return articles
+
 
     def __str__(self):
         """ 
