@@ -1,4 +1,4 @@
-from main import demo_mac
+from main import demo_main, main
 
 if __name__ == "__main__":
-    demo_mac()
+    demo_main()
