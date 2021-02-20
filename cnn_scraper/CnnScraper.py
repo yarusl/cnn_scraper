@@ -3,7 +3,7 @@ from constants import BBC_NEWS
 
 class CnnScraper:
     def __init__(self, driver, topic_url, pages_to_scrape = 1):
-        if self.pages_to_scrape <= 0:
+        if pages_to_scrape <= 0:
             raise Exception(f"Variable 'pages_to_scrape' should be at least 1. You can't scrape less than one page")
 
         self.driver = driver
