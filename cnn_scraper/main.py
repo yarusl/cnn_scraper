@@ -71,15 +71,13 @@ def demo_main():
     pages_to_scrape = 1 # how many pages you want to scrape
 
 def demo_mac():
-    print('hello world')
     # for testing and debuging purposes
     mode = SILENT_MODE
     path_to_driver = './chromedriver' # path to your webdriver
     driver = create_driver(mode, path_to_driver)
-    topic_url = '' # your url
+    topic_url = 'https://www.bbc.com/news/wales' # your url
     pages_to_scrape = 1 # how many pages you want to scrape
     cnn_scraper = CnnScraper(driver, topic_url, pages_to_scrape)
-    cnn_scraper.validate_topic(topic_url)
     
 if __name__ == "__main__":
     main()

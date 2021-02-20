@@ -1,4 +1,5 @@
 from Article import Article
+from constants import BBC_NEWS
 
 class CnnScraper:
     def __init__(self, driver, topic_url, pages_to_scrape = 1):
@@ -6,14 +7,21 @@ class CnnScraper:
         self.topic_url = topic_url
         self.articles = [] # list of instances of class Article
         self.pages_to_scrape = pages_to_scrape
-        self.validate_topic(topic_url)
+        self.validate_url(topic_url)
 
-    def validate_topic(self,topic_url):
+    def validate_url(self, topic_url):
         """ 
-        checks if the topic is scrapable.
+        validate if the URL is bbc + validate if the topic is scrapable:
         meaning that the page has a 
         'Latest Updates' section.
         """
+
+
+        if not topic_url[:len(BBC_NEWS)] == BBC_NEWS or bbc.com/news:
+            raise Exception ("Invalid website")
+
+        # if i
+
 
         #TODO MICHAEL -- look for latest-updates
 
