@@ -1,5 +1,6 @@
 from Article import Article
 from constants import BBC_NEWS
+from bs4 import BeautifulSoup as bs
 
 class CnnScraper:
     def __init__(self, driver, topic_url, pages_to_scrape = 1):
@@ -18,17 +19,20 @@ class CnnScraper:
         meaning that the page has a 
         'Latest Updates' section.
         """
+        # validate URL is bbc news
+        short_url = topic_url
+        short_url = short_url.lstrip('https://').lstrip('www.').rstrip('/')
+        if short_url[:len(BBC_NEWS)] != BBC_NEWS or 'https://' != topic_url[:8]:
+            raise Exception("Invalid website")
+        #TODO see what to do on www. cases
 
+        # Check if there is a "UPDATE" section in the page
+        self.driver.get(topic_url)
+        page = self.driver.page_source
+        soup = bs(page, 'html.parser')
+        if soup.find("h2", {"id": "latest-updates"}) is None:
+            raise Exception('No news updates category in the page')
 
-        #if not topic_url[:len(BBC_NEWS)] == BBC_NEWS or bbc.com/news:
-        #    raise Exception ("Invalid website")
-
-        # if i
-
-
-        #TODO MICHAEL -- look for latest-updates
-
-        pass
 
     def scrape(self):
         """ 
