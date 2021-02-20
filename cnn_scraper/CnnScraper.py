@@ -6,30 +6,33 @@ class CnnScraper:
         self.topic_url = topic_url
         self.articles = [] # list of instances of class Article
         self.pages_to_scrape = pages_to_scrape
-        self.validate_page(topic_url)
+        self.validate_topic(topic_url)
 
-    def validate_topic(topic_url):
+    def validate_topic(self,topic_url):
         """ 
-        checks if the topic is srapable. 
+        checks if the topic is scrapable.
         meaning that the page has a 
         'Latest Updates' section.
-        """ 
+        """
+
+        #TODO MICHAEL -- look for latest-updates
+
         pass
 
-    def scrape():
+    def scrape(self):
         """ 
         scrapes all the articles from 
         n-pages
         """
         #driver.page_source.encode("utf-8") -- reminder
-        page = driver.get(self.topic_url)
+        page = self.driver.get(self.topic_url)
         for p in self.pages_to_scrape:
             self.articles += self.scrape_latest_updates()
             #go to next page
 
         return self.articles
 
-    def scrape_latest_updates():
+    def scrape_latest_updates(self):
         """ 
         scrapes all articles from 
         the 'Latest Updates' section

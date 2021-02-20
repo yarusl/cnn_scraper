@@ -1,4 +1,4 @@
-from selenium import webdriver 
+from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import bs4 as bs
 
@@ -12,7 +12,7 @@ from constants import (
         INTERACTIVE_MODE
     )
 from CnnScraper import CnnScraper
-soup = bs.BeautifulSoup(source, 'html.parser')
+#soup = bs.BeautifulSoup(source, 'html.parser')
 
 
 def create_driver(mode, driver_path):
@@ -29,7 +29,7 @@ def main():
     
     The first one is called SILENT_MODE, and that means 
     that you specify the information you want in the 
-    program inself by changing the variables in this function.  
+    program itself by changing the variables in this function.
     
     The second mode is the INTERACTIVE_MODE mode, witch is 
     enabled by default. This mode will display to you all 
@@ -42,7 +42,7 @@ def main():
     """
 
     mode = INTERACTIVE_MODE # choose a mode 
-    path_to_driver = './chromedriver.exe' # path to your webdriver
+    path_to_driver = './chromedriver' # path to your webdriver
     driver = create_driver(mode, path_to_driver)
     
     if mode == SILENT_MODE:
@@ -69,6 +69,17 @@ def demo_main():
     driver = create_driver(mode, path_to_driver)
     topic_url = '' # your url
     pages_to_scrape = 1 # how many pages you want to scrape
+
+def demo_mac():
+    print('hello world')
+    # for testing and debuging purposes
+    mode = SILENT_MODE
+    path_to_driver = './chromedriver' # path to your webdriver
+    driver = create_driver(mode, path_to_driver)
+    topic_url = '' # your url
+    pages_to_scrape = 1 # how many pages you want to scrape
+    cnn_scraper = CnnScraper(driver, topic_url, pages_to_scrape)
+    cnn_scraper.validate_topic(topic_url)
     
 if __name__ == "__main__":
     main()
