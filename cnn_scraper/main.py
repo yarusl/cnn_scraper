@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import bs4 as bs
+from Article import Article
 
 from interactive import (
         get_available_topics, 
@@ -15,7 +16,7 @@ from CnnScraper import CnnScraper
 #soup = bs.BeautifulSoup(source, 'html.parser')
 
 
-def create_driver(mode, driver_path):
+def create_driver(mode, executable_path):
     chrome_options = Options()
     
     if mode == SILENT_MODE:
@@ -23,7 +24,7 @@ def create_driver(mode, driver_path):
     elif mode == INTERACTIVE_MODE:
         chrome_options.add_experimental_option("detach", True)
 
-    return webdriver.Chrome(driver_path, options=chrome_options)
+    return webdriver.Chrome(executable_path=executable_path, options=chrome_options)
 
 def main():
     """ 
@@ -66,6 +67,7 @@ def main():
 
 def demo_main():
     # for testing and debuging purposes
+    
     mode = SILENT_MODE
     mode = INTERACTIVE_MODE
     path_to_driver = './chromedriver.exe' # path to your webdriver
@@ -74,6 +76,8 @@ def demo_main():
     pages_to_scrape = 1 # how many pages you want to scrape
     cnn_scraper = CnnScraper(driver, topic_url, pages_to_scrape)
     cnn_scraper.scrape()
+    print(cnn_scraper)
+    del cnn_scraper
 
 def demo_mac():
     # for testing and debuging purposes

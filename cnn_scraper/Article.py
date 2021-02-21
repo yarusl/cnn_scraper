@@ -7,8 +7,15 @@ class Article:
         self.img = img
 
     def __str__(self):
-        """ 
-        returns a readable string 
-        representation of this Article
-        """
-        pass
+    
+        return f"""
+-------------------------------------------------------------------------
+`{self.title}`
+{self.text}
+
+Posted date: {self.date}
+Link: {self.url}
+Link to image: {self.img}
+-------------------------------------------------------------------------
+
+"""

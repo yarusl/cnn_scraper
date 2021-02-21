@@ -88,7 +88,7 @@ class CnnScraper:
             url = self.get_url(el_soup.find("a", {"class": "qa-story-cta-link"}))
             img = self.get_src(el_soup.find("img", {"class": "lx-stream-related-story--index-image"}))
             articles.append(Article(title, text, date, url, img))
-
+        
         return articles
 
 
@@ -97,9 +97,12 @@ class CnnScraper:
         returns a readable representation 
         of the result of the scrape 
         """
-        pass
+        res = ""
+        for article in self.articles:
+            res += str(article) + '\n'
+
+        return res
 
     def __del__(self):
         """ closes the browser """
-        #self.driver.quit()
-        pass
+        self.driver.quit()
