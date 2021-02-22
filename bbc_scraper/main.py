@@ -12,8 +12,7 @@ from constants import (
         SILENT_MODE, 
         INTERACTIVE_MODE
     )
-from CnnScraper import CnnScraper
-#soup = bs.BeautifulSoup(source, 'html.parser')
+from BBCScraper import BBCScraper
 
 
 def create_driver(mode, executable_path):
@@ -60,10 +59,10 @@ def main():
     else:
         raise Exception("Invalid mode")
     
-    cnn_scraper = CnnScraper(driver, topic_url, pages_to_scrape)
-    cnn_scraper.scrape()
-    print(cnn_scraper)
-    del cnn_scraper
+    bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
+    bbc_scraper.scrape()
+    print(bbc_scraper)
+    del bbc_scraper
 
 def demo_main():
     # for testing and debuging purposes
@@ -74,10 +73,10 @@ def demo_main():
     driver = create_driver(mode, path_to_driver)
     topic_url = 'https://www.bbc.com/news/wales' # your url
     pages_to_scrape = 1 # how many pages you want to scrape
-    cnn_scraper = CnnScraper(driver, topic_url, pages_to_scrape)
-    cnn_scraper.scrape()
-    print(cnn_scraper)
-    del cnn_scraper
+    bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
+    bbc_scraper.scrape()
+    print(bbc_scraper)
+    del bbc_scraper
 
 def demo_mac():
     # for testing and debuging purposes
@@ -86,7 +85,7 @@ def demo_mac():
     driver = create_driver(mode, path_to_driver)
     topic_url = 'https://www.bbc.com/news/wales' # your url
     pages_to_scrape = 1 # how many pages you want to scrape
-    cnn_scraper = CnnScraper(driver, topic_url, pages_to_scrape)
+    bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     get_available_topics(driver)
     
 if __name__ == "__main__":

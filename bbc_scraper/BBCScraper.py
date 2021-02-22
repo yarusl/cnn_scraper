@@ -2,7 +2,7 @@ from Article import Article
 from constants import BBC_NEWS
 from bs4 import BeautifulSoup as bs
 
-class CnnScraper:
+class BBCScraper:
     def __init__(self, driver, topic_url, pages_to_scrape = 1):
         if pages_to_scrape <= 0:
             raise Exception(f"Variable 'pages_to_scrape' should be at least 1. You can't scrape less than one page")
