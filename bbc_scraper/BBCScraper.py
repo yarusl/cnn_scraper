@@ -23,8 +23,8 @@ class BBCScraper:
         short_url = topic_url
         short_url = short_url.lstrip('https://').lstrip('www.').rstrip('/')
         print('short url is ',short_url)
-        if short_url is "":
-            raise Exception("Invalid website")
+#        if short_url is "":
+#            raise Exception("Invalid website")
         if short_url[:len(BBC_NEWS)] != BBC_NEWS or 'https://' != topic_url[:8]:
             raise Exception("Invalid website")
 
@@ -41,14 +41,15 @@ class BBCScraper:
         scrapes all the articles from 
         n-pages
         """
-        next_page = '// *[ @ id = "lx-stream"] / div[2] / div / div[3] / a[1]'
+        next_page = 'gs-u-mr+ qa-pagination-next-page'
 
         self.driver.get(self.topic_url)
         for p in range(1, self.pages_to_scrape + 1):
             self.articles += self.scrape_latest_updates()
             if p != self.pages_to_scrape:
                 print("Going to the next page")
-                self.driver.find_element_by_xpath(next_page).click()
+                print(self.driver.find_elements_by_class_name(next_page))
+                self.driver.find_elements_by_class_name(next_page)[0].click()
 
         return self.articles
 
@@ -84,7 +85,7 @@ class BBCScraper:
         soup = bs(self.driver.page_source, 'html.parser')
         elements = soup.find_all("li", {"class": "lx-stream__post-container"})
         for el_soup in elements:
-            title = el_soup.find("h3").a.span.text
+            title = ""
             text = self.get_text(el_soup.find("p", {"class": "lx-stream-related-story--summary"}))
             date = self.get_date(el_soup.find("span", {"class": "qa-visually-hidden-meta"}))
             url = self.get_url(el_soup.find("a", {"class": "qa-story-cta-link"}))

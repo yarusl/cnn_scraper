@@ -7,7 +7,7 @@ def test():
     date = "date"
     url = "url"
     img = "img"
-    article = Article.Article(title, text, date, url, img)  
+    article = Article.Article(title, text, date, url, img)
 
     expected_1 = """
 -------------------------------------------------------------------------
