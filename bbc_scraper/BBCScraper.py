@@ -22,9 +22,11 @@ class BBCScraper:
         # validate URL is bbc news
         short_url = topic_url
         short_url = short_url.lstrip('https://').lstrip('www.').rstrip('/')
+        print('short url is ',short_url)
+        if short_url is "":
+            raise Exception("Invalid website")
         if short_url[:len(BBC_NEWS)] != BBC_NEWS or 'https://' != topic_url[:8]:
             raise Exception("Invalid website")
-        #TODO see what to do on www. cases
 
         # Check if there is a "UPDATE" section in the page
         self.driver.get(topic_url)

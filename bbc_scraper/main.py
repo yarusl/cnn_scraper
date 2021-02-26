@@ -44,7 +44,7 @@ def main():
     """
 
     mode = INTERACTIVE_MODE # choose a mode 
-    path_to_driver = './chromedriver.exe' # path to your webdriver
+    path_to_driver = './chromedriver' # path to your webdriver
     driver = create_driver(mode, path_to_driver)
     
     if mode == SILENT_MODE:
@@ -67,16 +67,15 @@ def main():
 def demo_main():
     # for testing and debuging purposes
     
-    mode = SILENT_MODE
+    #mode = SILENT_MODE
     mode = INTERACTIVE_MODE
-    path_to_driver = './chromedriver.exe' # path to your webdriver
+    path_to_driver = './chromedriver' # path to your webdriver
     driver = create_driver(mode, path_to_driver)
-    topic_url = 'https://www.bbc.com/news/wales' # your url
+    #topic_url = 'https://www.bbc.com/news/wales' # your url
     pages_to_scrape = 1 # how many pages you want to scrape
     bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     bbc_scraper.scrape()
     print(bbc_scraper)
-    del bbc_scraper
 
 def demo_mac():
     # for testing and debuging purposes
