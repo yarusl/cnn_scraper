@@ -102,7 +102,7 @@ class BBCScraper:
         res = ""
         for article in self.articles:
             res += str(article) + '\n'
-
+        res += f"Articles scraped: {len(self.articles)}"
         return res
 
     def __del__(self):
