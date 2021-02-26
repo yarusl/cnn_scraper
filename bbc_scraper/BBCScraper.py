@@ -41,14 +41,13 @@ class BBCScraper:
         scrapes all the articles from 
         n-pages
         """
-        next_page = 'gs-u-mr+ qa-pagination-next-page'
+        next_page = 'qa-pagination-next-page'
 
         self.driver.get(self.topic_url)
         for p in range(1, self.pages_to_scrape + 1):
             self.articles += self.scrape_latest_updates()
             if p != self.pages_to_scrape:
                 print("Going to the next page")
-                print(self.driver.find_elements_by_class_name(next_page))
                 self.driver.find_elements_by_class_name(next_page)[0].click()
 
         return self.articles
@@ -82,10 +81,12 @@ class BBCScraper:
         the 'Latest Updates' section
         """
         articles = []
+
         soup = bs(self.driver.page_source, 'html.parser')
+        soup = soup.find("h2", {"id": "latest-updates"}).find_parent('div')
         elements = soup.find_all("li", {"class": "lx-stream__post-container"})
         for el_soup in elements:
-            title = ""
+            title = el_soup.find("h3", {"class": "lx-stream-post__header-title"})
             text = self.get_text(el_soup.find("p", {"class": "lx-stream-related-story--summary"}))
             date = self.get_date(el_soup.find("span", {"class": "qa-visually-hidden-meta"}))
             url = self.get_url(el_soup.find("a", {"class": "qa-story-cta-link"}))
