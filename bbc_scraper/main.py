@@ -17,6 +17,10 @@ from settings import mode, pages_to_scrape, topic_url
 import sys
 
 def get_driver_path():
+    """ 
+    returns the path to the driver 
+    according to the operation system
+    """
     platforms = {
         'linux' : "./drivers/l_chromedriver",
         'linux1' : "./drivers/l_chromedriver",
