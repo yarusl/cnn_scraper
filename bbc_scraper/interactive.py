@@ -24,11 +24,9 @@ def topic_selector(topics):
     """
     print("topic list", topics)
     print("The available topics are", topics)
-    topics_dict = {}
-    topics_dict[0] = "News Homepage"
+    print("0 - News Homepage")
     for i in range(1,len(topics)):
-        topics_dict[i] = topics[i]
-    print(topics_dict)
+        print(i, " - ", topics[i],"\n")
     chosen_topic_no = int(input("Which topic would you like to scrap? - Select the topic number "))
     topic_url ='https://www.'+ BBC_NEWS +'/'+ topics[chosen_topic_no]+'/'
     print('topic url is',topic_url)
