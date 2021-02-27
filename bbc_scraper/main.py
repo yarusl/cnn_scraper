@@ -69,7 +69,7 @@ def demo_main():
     
     #mode = SILENT_MODE
     mode = INTERACTIVE_MODE
-    path_to_driver = './chromedriver.exe' # path to your webdriver
+    path_to_driver = './chromedriver' # path to your webdriver
     driver = create_driver(mode, path_to_driver)
     topic_url = 'https://www.bbc.com/news/technology' # your url
     pages_to_scrape = 4 # how many pages you want to scrape
