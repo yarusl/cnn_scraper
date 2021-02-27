@@ -18,11 +18,11 @@ import sys
 
 def get_driver_path():
     platforms = {
-        'linux' : "./l_chromedriver",
-        'linux1' : "./l_chromedriver",
-        'linux2' : "./l_chromedriver",
-        'darwin' : "./chromedriver",
-        'win32' : "./chromedriver.exe"
+        'linux' : "./drivers/l_chromedriver",
+        'linux1' : "./drivers/l_chromedriver",
+        'linux2' : "./drivers/l_chromedriver",
+        'darwin' : "./drivers/chromedriver",
+        'win32' : "./drivers/chromedriver.exe"
     }
     if sys.platform not in platforms:
         raise Exception('Unknown platform: %s' % sys.platform, \
