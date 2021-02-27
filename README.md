@@ -1,24 +1,16 @@
 # BBCScraper
 
-![](https://github.com/yarusl/bbc_scraper/img/logo.png)
+![](https://raw.githubusercontent.com/yarusl/bbc_scraper/main/img/logo.png)
 
-##Scraper for [bbc.com](https://bbc.com/news/)
+## Features
 
 - Scrapes latest news on any topic e.g.  [wales](https://www.bbc.com/news/wales) or [business](https://www.bbc.com/news/business)
 - Scrapes multiple pages of the latest news updates on a topic
 - If you're not sure which topic you want to scrape, the sraper will provide you a list of potentialy available topics
 -------------
-<br>
-
-**Content**
-
-[TOC]
-
-<br>
--------------
 
 # Usage
-To use the scraper simply download the prject and go to the project main directory:
+To use the scraper simply download the project and go to the project main directory:
 
 `$ git clone https://github.com/yarusl/bbc_scraper.git`
 
@@ -30,7 +22,7 @@ And then run the main.py file:
 
 ## Modes
 #### Interactive mode
-The scraper has two modes, the first one is the interactive mode and it is the default mode. Whee the scraper runs in the interactive mode it will check which news topics could be potentially scraped. Some of them will be scrapable, some of them not. It depends on if the news topic has a "latest updates"section on the page.  
+The scraper has two modes, the first one is the interactive mode and it is the default mode. When the scraper runs in the interactive mode it will check which news topics could be potentially scraped. Some of them will be scrapable, some of them not. It depends on if the news topic has a "latest updates"section on the page.  
 
 After the scraper has done with fetching the available topics it will show a promt and ask you which one of the topics you want to scrape (keep in mind that you could choose and unscrapable topic, the program doesn't check in advance if you can actually scrape the topic. It just gives you a list). 
 The last thing it is going to ask you is how many pages do you want to scrape.  
@@ -38,8 +30,8 @@ The last thing it is going to ask you is how many pages do you want to scrape.
 After that it will print you the final result. 
 <br>
 
-#### Scilent mode
-The second one is the scilent mode. In this mode you have to specify the link to the topic  and the number of pages by hand, changing variables in the <b>_settings.py_</b> file.
+#### Silent mode
+The second one is the silent mode. In this mode you have to specify the link to the topic  and the number of pages by hand, changing variables in the <b>_settings.py_</b> file.
 
 <b>_settings.py_ :</b>
 <pre>topic_url = "https://www.bbc.com/news/wales"
