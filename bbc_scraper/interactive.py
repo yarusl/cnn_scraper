@@ -15,16 +15,14 @@ def get_available_topics(driver):
     home_result = result[0]
     topics_l = [ele[6:] for ele in result[1:]]
     topics_l.insert(0, home_result)
-    return topics_l
+    return topics_l[0:]
 
 def topic_selector(topics):
     """
     displays to the user available topics 
     and return the one that the user has selected
     """
-    print("topic list", topics)
-    print("The available topics are", topics)
-    print("0 - News Homepage")
+    print("\nThe available topics are:")
 
     for i in range(1,len(topics)):
         print(i, "-", topics[i])
@@ -32,6 +30,7 @@ def topic_selector(topics):
     chosen_topic_no = "-1"
     while not chosen_topic_no.isdigit or (int(chosen_topic_no) not in range(len(topics))):
         chosen_topic_no = input("Which topic would you like to scrap? \nSelect the topic number: ")
+    
     topic_url ='https://www.'+ BBC_NEWS +'/'+ topics[int(chosen_topic_no)]+'/'
     print('Topic url is', topic_url)
     return topic_url

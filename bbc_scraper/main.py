@@ -14,6 +14,24 @@ from constants import (
     )
 from BBCScraper import BBCScraper
 from settings import mode, pages_to_scrape, topic_url
+import sys
+
+def get_driver_path():
+    platforms = {
+        'linux' : "./l_chromedriver",
+        'linux1' : "./l_chromedriver",
+        'linux2' : "./l_chromedriver",
+        'darwin' : "./chromedriver",
+        'win32' : "./chromedriver.exe"
+    }
+    if sys.platform not in platforms:
+        raise Exception('Unknown platform: %s' % sys.platform, \
+                            "\nYou should download the chromedriver yourself "\
+                            "and write the path to the chromedriver in the "\
+                            "variable 'path_to_driver', which is located in the"\
+                            "'main' function")
+    
+    return platforms[sys.platform]
 
 def create_driver(mode, executable_path):
     chrome_options = Options()
@@ -45,13 +63,13 @@ def main():
     using in the 'path_to_driver' variable
     """ 
 
-    path_to_driver = './chromedriver.exe'  
+    path_to_driver = get_driver_path()  
     driver = create_driver(mode, path_to_driver)
 
     if mode == INTERACTIVE_MODE:
         topics = get_available_topics(driver)
         topic_url = topic_selector(topics)
-        pages_to_scrape = int(input("How many pages you want to scrape?"))
+        pages_to_scrape = int(input("How many pages you want to scrape? "))
 
     bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     bbc_scraper.scrape()
