@@ -2,7 +2,7 @@
 
 ![](https://raw.githubusercontent.com/yarusl/bbc_scraper/main/img/logo.png)
 
-## Scraper for [bbc.com](https://bbc.com/news/)
+## Features
 
 - Scrapes latest news on any topic e.g.  [wales](https://www.bbc.com/news/wales) or [business](https://www.bbc.com/news/business)
 - Scrapes multiple pages of the latest news updates on a topic
