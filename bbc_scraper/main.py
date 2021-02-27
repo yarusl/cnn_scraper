@@ -46,7 +46,7 @@ def main():
     mode = INTERACTIVE_MODE # choose a mode 
     path_to_driver = './chromedriver.exe' # path to your webdriver
     driver = create_driver(mode, path_to_driver)
-    print("asdf")
+    
     if mode == SILENT_MODE:
         topic_url = '' # your url example: "https://www.bbc.com/news/the_reporters"
         pages_to_scrape = 1 # how many pages you want to scrape 
@@ -58,34 +58,11 @@ def main():
     
     else:
         raise Exception("Invalid mode")
-    
+
     bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     bbc_scraper.scrape()
     print(bbc_scraper)
     del bbc_scraper
-
-def demo_main():
-    # for testing and debuging purposes
-    
-    #mode = SILENT_MODE
-    mode = INTERACTIVE_MODE
-    path_to_driver = './chromedriver' # path to your webdriver
-    driver = create_driver(mode, path_to_driver)
-    topic_url = 'https://www.bbc.com/news/technology' # your url
-    pages_to_scrape = 4 # how many pages you want to scrape
-    bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
-    bbc_scraper.scrape()
-    print(bbc_scraper)
-
-def demo_mac():
-    # for testing and debuging purposes
-    mode = INTERACTIVE_MODE
-    path_to_driver = './chromedriver' # path to your webdriver
-    driver = create_driver(mode, path_to_driver)
-    topic_url = 'https://www.bbc.com/news/wales' # your url
-    pages_to_scrape = 1 # how many pages you want to scrape
-    bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
-    get_available_topics(driver)
     
 if __name__ == "__main__":
-    demo_main()
+    main()
