@@ -109,4 +109,7 @@ class BBCScraper:
 
     def __del__(self):
         """ closes the browser """
-        self.driver.quit()
+        try:
+            self.driver.quit()
+        except Exception as e:
+            pass
