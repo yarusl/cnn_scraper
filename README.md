@@ -1,20 +1,12 @@
 # BBCScraper
 
-![](https://github.com/yarusl/bbc_scraper/img/logo.png)
+![](https://raw.githubusercontent.com/yarusl/bbc_scraper/main/img/logo.png)
 
-##Scraper for [bbc.com](https://bbc.com/news/)
+## Scraper for [bbc.com](https://bbc.com/news/)
 
 - Scrapes latest news on any topic e.g.  [wales](https://www.bbc.com/news/wales) or [business](https://www.bbc.com/news/business)
 - Scrapes multiple pages of the latest news updates on a topic
 - If you're not sure which topic you want to scrape, the sraper will provide you a list of potentialy available topics
--------------
-<br>
-
-**Content**
-
-[TOC]
-
-<br>
 -------------
 
 # Usage
