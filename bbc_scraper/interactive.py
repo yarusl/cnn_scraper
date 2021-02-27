@@ -5,7 +5,7 @@ def get_available_topics(driver):
     """
     returns a topics list that can be scraped
     """
-    driver.get('https://www.'+BBC_NEWS)
+    driver.get('https://www.' + BBC_NEWS)
     page = driver.page_source
     soup = bs(page, 'html.parser')
     find_all = soup.find_all("li",'nw-c-nav__wide-menuitem-container')
@@ -14,7 +14,7 @@ def get_available_topics(driver):
         result.append(element.a["href"])
     home_result = result[0]
     topics_l = [ele[6:] for ele in result[1:]]
-    topics_l.insert(0,home_result)
+    topics_l.insert(0, home_result)
     return topics_l
 
 def topic_selector(topics):
