@@ -13,7 +13,7 @@ from constants import (
         INTERACTIVE_MODE
     )
 from BBCScraper import BBCScraper
-
+from settings import mode, pages_to_scrape, topic_url
 
 def create_driver(mode, executable_path):
     chrome_options = Options()
@@ -22,6 +22,8 @@ def create_driver(mode, executable_path):
         chrome_options.add_argument("--headless")
     elif mode == INTERACTIVE_MODE:
         chrome_options.add_experimental_option("detach", True)
+    else:
+        raise Exception("Invalid mode")
 
     return webdriver.Chrome(executable_path=executable_path, options=chrome_options)
 
@@ -41,23 +43,15 @@ def main():
 
     You also need to scpecify the path to the webdriver you're 
     using in the 'path_to_driver' variable
-    """
+    """ 
 
-    mode = INTERACTIVE_MODE # choose a mode 
-    path_to_driver = './chromedriver.exe' # path to your webdriver
+    path_to_driver = './chromedriver.exe'  
     driver = create_driver(mode, path_to_driver)
-    
-    if mode == SILENT_MODE:
-        topic_url = '' # your url example: "https://www.bbc.com/news/the_reporters"
-        pages_to_scrape = 1 # how many pages you want to scrape 
 
-    elif mode == INTERACTIVE_MODE:
+    if mode == INTERACTIVE_MODE:
         topics = get_available_topics(driver)
         topic_url = topic_selector(topics)
         pages_to_scrape = int(input("How many pages you want to scrape?"))
-    
-    else:
-        raise Exception("Invalid mode")
 
     bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     bbc_scraper.scrape()
