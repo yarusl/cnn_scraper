@@ -1,7 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import bs4 as bs
-from Article import Article
 
 from interactive import (
         get_available_topics, 
@@ -66,7 +64,7 @@ def main():
     You also need to scpecify the path to the webdriver you're 
     using in the 'path_to_driver' variable
     """ 
-
+    global topic_url, mode, pages_to_scrape
     path_to_driver = get_driver_path()  
     driver = create_driver(mode, path_to_driver)
 
@@ -78,6 +76,7 @@ def main():
     bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     bbc_scraper.scrape()
     print(bbc_scraper)
+    bbc_scraper.save()
     del bbc_scraper
     
 if __name__ == "__main__":
