@@ -2,6 +2,7 @@ from Article import Article
 from constants import BBC_NEWS
 from bs4 import BeautifulSoup as bs
 
+
 class BBCScraper:
     def __init__(self, driver, topic_url, pages_to_scrape = 1):
         if pages_to_scrape <= 0:
@@ -23,7 +24,6 @@ class BBCScraper:
         
         short_url = topic_url.lstrip('https://').lstrip('www.').rstrip('/')
         
-
         if short_url[:len(BBC_NEWS)] != BBC_NEWS or 'https://' != topic_url[:8]:
             raise Exception("Invalid website")
         
@@ -33,7 +33,6 @@ class BBCScraper:
         soup = bs(page, 'html.parser')
         if soup.find("h2", {"id": "latest-updates"}) is None:
             raise Exception('No news updates category in the page')
-
 
     def scrape(self):
         """ 
@@ -65,13 +64,11 @@ class BBCScraper:
     def get_src(self, el_soup):
         if el_soup is None:
             return None
-
         return el_soup["src"]
 
     def get_date(self, el_soup):
         if el_soup is None:
             return None
-
         return el_soup.text
 
     def scrape_latest_updates(self):
@@ -94,7 +91,6 @@ class BBCScraper:
         
         return articles
 
-
     def __str__(self):
         """ 
         returns a readable representation 
@@ -111,4 +107,4 @@ class BBCScraper:
         try:
             self.driver.quit()
         except Exception as e:
-            pass
+            print("the delete function did not work on its try due to : {e}")
