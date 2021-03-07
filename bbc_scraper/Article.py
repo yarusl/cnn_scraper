@@ -1,9 +1,10 @@
 import pymysql
+from settings import USER, PASSWORD, HOST, DATABASE
 # Connect to the database
-connection = pymysql.connect(host='localhost',
-                             user='root',
-                             password='futur(((',
-                             database='mydb',
+connection = pymysql.connect(host=HOST,
+                             user=USER,
+                             password=PASSWORD,
+                             database=DATABASE,
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
 
