@@ -1,7 +1,6 @@
 from Article import Article
 from constants import BBC_NEWS
 from bs4 import BeautifulSoup as bs
-from urllib.parse import urlparse
 
 class BBCScraper:
     def __init__(self, driver, topic_url, pages_to_scrape = 1):
@@ -24,7 +23,7 @@ class BBCScraper:
         
         short_url = topic_url.lstrip('https://').lstrip('www.').rstrip('/')
         
-        
+
         if short_url[:len(BBC_NEWS)] != BBC_NEWS or 'https://' != topic_url[:8]:
             raise Exception("Invalid website")
         

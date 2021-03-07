@@ -16,6 +16,10 @@ To use the scraper simply download the project and go to the project main direct
 
 `$ cd bbc_scraper/bbc_scraper`
 
+If you're using linux or mac you should run this command before running the main.py script (once it's done, you don't have to run this command anymore in the future):
+
+`$ chmod 755 drivers/*`
+
 And then run the main.py file:
 
 `$ python3 main.py`
