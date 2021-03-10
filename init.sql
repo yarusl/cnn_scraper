@@ -21,18 +21,16 @@ USE `mydb` ;
 -- Table `mydb`.`Articles`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Articles` (
-  `idArticles` INT NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `title` VARCHAR(45) NULL,
-  `date` DATETIME NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(200) NULL,
+  `date` VARCHAR(45) NULL,
   `text` LONGTEXT NULL,
   `image` VARCHAR(200) NULL,
-  `url` VARCHAR(200) NULL,
-  `topic` VARCHAR(45) NULL,
-  `subtopic` VARCHAR(45) NULL,
-  PRIMARY KEY (`idArticles`))
-ENGINE = InnoDB;
+  `url` VARCHAR(200) NOT NULL,
+  `topic_url` VARCHAR(90) NULL,
+  PRIMARY KEY (`id`, `url`))
 
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

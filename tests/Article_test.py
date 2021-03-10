@@ -1,9 +1,11 @@
 from base import *
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../bbc_scraper/')))
 import Article
 
+
 def test():
-    title = "title" 
+    title = "title"
     text = "text"
     date = "date"
     url = "url"
@@ -22,6 +24,7 @@ Link to image: img
 
 """
     assert str(article) == expected_1
-    
+
+
 if __name__ == '__main__':
     test()

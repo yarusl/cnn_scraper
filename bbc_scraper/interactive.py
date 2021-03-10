@@ -1,6 +1,7 @@
 from constants import BBC_NEWS
 from bs4 import BeautifulSoup as bs
 
+
 def get_available_topics(driver):
     """
     returns a topics list that can be scraped
@@ -8,7 +9,7 @@ def get_available_topics(driver):
     driver.get('https://www.' + BBC_NEWS)
     page = driver.page_source
     soup = bs(page, 'html.parser')
-    find_all = soup.find_all("li",'nw-c-nav__wide-menuitem-container')
+    find_all = soup.find_all("li", 'nw-c-nav__wide-menuitem-container')
     result = []
     for element in find_all:
         result.append(element.a["href"])
@@ -17,6 +18,7 @@ def get_available_topics(driver):
     topics_l.insert(0, home_result)
     return topics_l[0:]
 
+
 def topic_selector(topics):
     """
     displays to the user available topics 
@@ -24,13 +26,13 @@ def topic_selector(topics):
     """
     print("\nThe available topics are:")
 
-    for i in range(1,len(topics)):
+    for i in range(1, len(topics)):
         print(i, "-", topics[i])
 
     chosen_topic_no = "-1"
     while not chosen_topic_no.isdigit or (int(chosen_topic_no) not in range(len(topics))):
         chosen_topic_no = input("Which topic would you like to scrap? \nSelect the topic number: ")
-    
-    topic_url ='https://www.'+ BBC_NEWS +'/'+ topics[int(chosen_topic_no)]+'/'
+
+    topic_url = 'https://www.' + BBC_NEWS + '/' + topics[int(chosen_topic_no)] + '/'
     print('Topic url is', topic_url)
     return topic_url

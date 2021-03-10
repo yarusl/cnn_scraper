@@ -2,17 +2,18 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from interactive import (
-        get_available_topics, 
-        topic_selector
-    )
+    get_available_topics,
+    topic_selector
+)
 
 from constants import (
-        SILENT_MODE, 
-        INTERACTIVE_MODE
-    )
+    SILENT_MODE,
+    INTERACTIVE_MODE
+)
 from BBCScraper import BBCScraper
 from settings import mode, pages_to_scrape, topic_url
 import sys
+
 
 def get_driver_path():
     """ 
@@ -20,24 +21,25 @@ def get_driver_path():
     according to the operation system
     """
     platforms = {
-        'linux' : "./drivers/l_chromedriver",
-        'linux1' : "./drivers/l_chromedriver",
-        'linux2' : "./drivers/l_chromedriver",
-        'darwin' : "./drivers/chromedriver",
-        'win32' : "./drivers/chromedriver.exe"
+        'linux': "./drivers/l_chromedriver",
+        'linux1': "./drivers/l_chromedriver",
+        'linux2': "./drivers/l_chromedriver",
+        'darwin': "./drivers/chromedriver",
+        'win32': "./drivers/chromedriver.exe"
     }
     if sys.platform not in platforms:
         raise Exception('Unknown platform: %s' % sys.platform, \
-                            "\nYou should download the chromedriver yourself "\
-                            "and write the path to the chromedriver in the "\
-                            "variable 'path_to_driver', which is located in the"\
-                            "'main' function")
-    
+                        "\nYou should download the chromedriver yourself " \
+                        "and write the path to the chromedriver in the " \
+                        "variable 'path_to_driver', which is located in the" \
+                        "'main' function")
+
     return platforms[sys.platform]
+
 
 def create_driver(mode, executable_path):
     chrome_options = Options()
-    
+
     if mode == SILENT_MODE:
         chrome_options.add_argument("--headless")
     elif mode == INTERACTIVE_MODE:
@@ -46,6 +48,7 @@ def create_driver(mode, executable_path):
         raise Exception("Invalid mode")
 
     return webdriver.Chrome(executable_path=executable_path, options=chrome_options)
+
 
 def main():
     """ 
@@ -63,9 +66,9 @@ def main():
 
     You also need to scpecify the path to the webdriver you're 
     using in the 'path_to_driver' variable
-    """ 
+    """
     global topic_url, mode, pages_to_scrape
-    path_to_driver = get_driver_path()  
+    path_to_driver = get_driver_path()
     driver = create_driver(mode, path_to_driver)
 
     if mode == INTERACTIVE_MODE:
@@ -78,6 +81,7 @@ def main():
     print(bbc_scraper)
     bbc_scraper.save()
     del bbc_scraper
-    
+
+
 if __name__ == "__main__":
     main()

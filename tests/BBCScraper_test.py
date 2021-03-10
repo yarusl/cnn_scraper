@@ -4,12 +4,12 @@ from main import create_driver, get_driver_path
 from constants import *
 from selenium.webdriver.chrome.options import Options
 
-#Lets create a scraper to test the methods on a chosen arbitrary topic Url: here the technology section
+# Lets create a scraper to test the methods on a chosen arbitrary topic Url: here the technology section
 test_topic_url = 'https://www.bbc.com/news/technology'
 driver = create_driver(SILENT_MODE, get_driver_path())
-test_bbc_scraper = BBCScraper(driver = driver, topic_url = test_topic_url, pages_to_scrape=1)
+test_bbc_scraper = BBCScraper(driver=driver, topic_url=test_topic_url, pages_to_scrape=1)
 
-#Test of the latest update method of BBCScrapper
+# Test of the latest update method of BBCScrapper
 try:
     test_bbc_scraper.scrape_latest_updates()
 except Exception as ex:

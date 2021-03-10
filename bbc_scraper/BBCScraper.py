@@ -4,13 +4,13 @@ from bs4 import BeautifulSoup as bs
 
 
 class BBCScraper:
-    def __init__(self, driver, topic_url, pages_to_scrape = 1):
+    def __init__(self, driver, topic_url, pages_to_scrape=1):
         if pages_to_scrape <= 0:
             raise Exception(f"Variable 'pages_to_scrape' should be at least 1. You can't scrape less than one page")
 
         self.driver = driver
         self.topic_url = topic_url
-        self.articles = [] # list of instances of class Article
+        self.articles = []  # list of instances of class Article
         self.pages_to_scrape = pages_to_scrape
         self.validate_url(topic_url)
 
@@ -21,12 +21,12 @@ class BBCScraper:
         'Latest Updates' section.
         """
         # validate URL is bbc news
-        
+
         short_url = topic_url.lstrip('https://').lstrip('www.').rstrip('/')
-        
+
         if short_url[:len(BBC_NEWS)] != BBC_NEWS or 'https://' != topic_url[:8]:
             raise Exception("Invalid website")
-        
+
         # Check if there is a "UPDATE" section in the page
         self.driver.get(topic_url)
         page = self.driver.page_source
@@ -49,7 +49,6 @@ class BBCScraper:
                 self.driver.find_elements_by_class_name(next_page)[0].click()
 
         return self.articles
-
 
     def save(self):
         """Saves each one of the articles in the database"""
@@ -88,7 +87,7 @@ class BBCScraper:
         soup = soup.find("h2", {"id": "latest-updates"}).find_parent('div')
         elements = soup.find_all("li", {"class": "lx-stream__post-container"})
         for el_soup in elements:
-            title = ""#el_soup.find("h3", {"class": "lx-stream-post__header-title"})
+            title = ""  # el_soup.find("h3", {"class": "lx-stream-post__header-title"})
             text = self.get_text(el_soup.find("p", {"class": "lx-stream-related-story--summary"}))
             date = self.get_date(el_soup.find("span", {"class": "qa-visually-hidden-meta"}))
             url = self.get_url(el_soup.find("a", {"class": "qa-story-cta-link"}))
