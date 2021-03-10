@@ -1,5 +1,7 @@
 import pymysql
+from constants import BBC_PROTOCOL
 from settings import USER, PASSWORD, HOST, DATABASE
+from bs4 import BeautifulSoup as bs
 # Connect to the database
 connection = pymysql.connect(host=HOST,
                              user=USER,
@@ -10,12 +12,45 @@ connection = pymysql.connect(host=HOST,
 
 
 class Article:
-    def __init__(self, title, text, date, url, img):
+    def __init__(self, title, short_text, date, url, img):
         self.title = title
-        self.text = text
+        self.short_text = short_text
         self.date = date
-        self.url = url
+        self.url = BBC_PROTOCOL+url
         self.img = img
+        self.author = None
+        self.author_pos = None
+
+    def scrape_art(self,driver):
+        """For each article that was scraped from news update, we scrape as much information as possible"""
+
+        print(self.url)
+        driver.get(self.url)
+        page = driver.page_source
+        soup = bs(page, 'html.parser')
+
+        #BBC Related topics for this article are saved in a dict
+        self.related_top = {}
+        for ele in soup.findAll("a", {"class": "ed0g1kj1"}):
+            self.related_top[ele.text] = ele["href"]
+
+        #We save the entire article text
+        self.text = ""
+        for text_bloc in soup.findAll("div", {"class": "e1xue1i83"}):
+            self.text += text_bloc.text
+
+        #We save the author
+        author = soup.find("p", {"class": "e5xb54n0"})
+        if author is not None:
+            self.author = author.strong.text
+            self.author_pos = author.span.contents[2]
+
+        #We save the related articles
+        self.rel_articles = {}
+        rel_articles = soup.findAll("li", {"class": "e1nh2i2l2"})
+        for link in rel_articles:
+            self.rel_articles[link.p.span.text] = BBC_PROTOCOL + link.a["href"]
+        print(self.rel_articles)
 
     def __str__(self):
         return f"""

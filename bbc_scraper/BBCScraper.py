@@ -48,6 +48,10 @@ class BBCScraper:
                 print("Going to the next page")
                 self.driver.find_elements_by_class_name(next_page)[0].click()
 
+        # for each article present in the news update section we scrape all available data
+        for article in self.articles:
+            article.scrape_art(self.driver)
+
         return self.articles
 
     def save(self):
@@ -92,7 +96,10 @@ class BBCScraper:
             date = self.get_date(el_soup.find("span", {"class": "qa-visually-hidden-meta"}))
             url = self.get_url(el_soup.find("a", {"class": "qa-story-cta-link"}))
             img = self.get_src(el_soup.find("img", {"class": "lx-stream-related-story--index-image"}))
-            articles.append(Article(title, text, date, url, img))
+
+            #We will only take articles which have a url (to scrap a full content only)
+            if url is not None:
+                articles.append(Article(title, text, date, url, img))
         return articles
 
     def __str__(self):
