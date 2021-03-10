@@ -29,38 +29,47 @@ class Article:
         page = driver.page_source
         soup = bs(page, 'html.parser')
 
+        #self.rel_topics
         #BBC Related topics for this article are saved in a dict
         self.related_top = {}
         for ele in soup.findAll("a", {"class": "ed0g1kj1"}):
             self.related_top[ele.text] = ele["href"]
 
+        # self.text
         #We save the entire article text
         self.text = ""
         for text_bloc in soup.findAll("div", {"class": "e1xue1i83"}):
             self.text += text_bloc.text
 
+        #self.author
         #We save the author
         author = soup.find("p", {"class": "e5xb54n0"})
         if author is not None:
             self.author = author.strong.text
             self.author_pos = author.span.contents[2]
 
+        #self.rel_articles
         #We save the related articles
         self.rel_articles = {}
         rel_articles = soup.findAll("li", {"class": "e1nh2i2l2"})
         for link in rel_articles:
             self.rel_articles[link.p.span.text] = BBC_PROTOCOL + link.a["href"]
-        print(self.rel_articles)
 
     def __str__(self):
         return f"""
 -------------------------------------------------------------------------
-`{self.title}`
+{self.title}
+Written by: {self.author} - {self.author_pos}
+
 {self.text}
 
 Posted date: {self.date}
-Link: {self.url}
+Link of the article: {self.url}
 Link to image: {self.img}
+List of tags for the article and their links {self.related_top}
+List of related articles and their links {self.rel_articles}
+
+A summary to the article: {self.short_text}
 -------------------------------------------------------------------------
 
 """

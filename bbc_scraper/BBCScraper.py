@@ -2,7 +2,6 @@ from Article import Article
 from constants import BBC_NEWS
 from bs4 import BeautifulSoup as bs
 
-
 class BBCScraper:
     def __init__(self, driver, topic_url, pages_to_scrape=1):
         if pages_to_scrape <= 0:
@@ -91,15 +90,19 @@ class BBCScraper:
         soup = soup.find("h2", {"id": "latest-updates"}).find_parent('div')
         elements = soup.find_all("li", {"class": "lx-stream__post-container"})
         for el_soup in elements:
-            title = ""  # el_soup.find("h3", {"class": "lx-stream-post__header-title"})
+            url = self.get_url(el_soup.find("a", {"class": "qa-story-cta-link"}))
+            if url is None or url[0:6] != '/news/':
+                continue
+            title = self.get_text(el_soup.find("h3", {"class": "lx-stream-post__header-title"}))
             text = self.get_text(el_soup.find("p", {"class": "lx-stream-related-story--summary"}))
             date = self.get_date(el_soup.find("span", {"class": "qa-visually-hidden-meta"}))
-            url = self.get_url(el_soup.find("a", {"class": "qa-story-cta-link"}))
             img = self.get_src(el_soup.find("img", {"class": "lx-stream-related-story--index-image"}))
 
-            #We will only take articles which have a url (to scrap a full content only)
-            if url is not None:
-                articles.append(Article(title, text, date, url, img))
+            # FILTER articles to be scrapped
+            # We will only take articles which have a url (to scrap a full content only)
+            # and that are on the news section of the website
+            articles.append(Article(title, text, date, url, img))
+
         return articles
 
     def __str__(self):
