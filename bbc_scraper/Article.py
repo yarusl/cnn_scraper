@@ -69,7 +69,7 @@ Link to image: {self.img}
 List of tags for the article and their links {self.related_top}
 List of related articles and their links {self.rel_articles}
 
-A summary to the article: {self.short_text}
+A short summary to the article: --> {self.short_text}
 -------------------------------------------------------------------------
 
 """
@@ -77,6 +77,29 @@ A summary to the article: {self.short_text}
         """Saves the article in the database"""
         with connection.cursor() as cursor:
             try:
+                variablle=f'''
+                                    INSERT INTO Articles (`title`, `text`, `date`, `url`, `image`,`topic_url`) 
+                                    VALUES (
+                                            `{self.title}`, 
+                                            `{self.text}`, 
+                                            `{self.date}`, 
+                                            `{self.url}`,
+                                            `{self.img}`,
+                                            `{topic_url}`,
+                                            `{self.author}`,
+                                            `{self.author_pos}`);'''
+                #print(variablle)
+                #cursor.execute(f'''
+                #                    INSERT INTO Articles (`title`, `text`, `date`, `url`, `image`,`topic_url`)
+                #                    VALUES (
+                #                            `{self.title}`,
+                #                            `{self.text}`,
+                #                            `{self.date}`,
+                #                            `{self.url}`,
+                #                            `{self.img}`,
+                #                            `{topic_url}`,
+                #                            `{self.author}`,
+                #                            `{self.author_pos}`);''')
                 cursor.execute(f'''
                     INSERT INTO Articles (`title`, `text`, `date`, `url`, `image`,`topic_url`) 
                     VALUES (
@@ -85,7 +108,9 @@ A summary to the article: {self.short_text}
                             `{self.date}`, 
                             `{self.url}`,
                             `{self.img}`,
-                            `{topic_url}`);''')
+                            `{topic_url}`,
+                            `{self.author}`,
+                            `{self.author_pos}`);''')
                 cursor.commit()
             except Exception as e:
                 print(e)
