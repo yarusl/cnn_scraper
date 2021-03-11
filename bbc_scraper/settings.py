@@ -1,8 +1,5 @@
-from constants import (SILENT_MODE, INTERACTIVE_MODE)
-
-mode = SILENT_MODE # SILENT_MODE
-topic_url = "https://www.bbc.com/news/technology"  # your url example: "https://www.bbc.com/news/the_reporters"
-pages_to_scrape = 1
+from cli import parse_args
+mode, topic_url, pages_to_scrape = parse_args()
 
 HOST = 'localhost'
 USER = 'root'
