@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from settings import mode, pages_to_scrape, topic_url
 
 from interactive import (
     get_available_topics,
@@ -11,7 +12,7 @@ from constants import (
     INTERACTIVE_MODE
 )
 from BBCScraper import BBCScraper
-from settings import mode, pages_to_scrape, topic_url
+
 import sys
 
 

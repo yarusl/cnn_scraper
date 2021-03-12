@@ -1,0 +1,1 @@
+INSERT INTO articles ("title", "text", "date", "url", "image","topic_url") VALUES ("Man pleads guilty to attacks on Quinn directors","Posted at 17:01 11 Mar","BLABLA","https://www.bbc.com/news/uk-northern-ireland-56361496","https://ichef.bbci.co.uk/live-experience/cps/320/cpsprodpb/17857/production/_117534369_cavancourtbbc.jpg","https://www.bbc.com/news/world/europe");

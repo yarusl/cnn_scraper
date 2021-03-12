@@ -77,15 +77,9 @@ A summary to the article: {self.short_text}
         """Saves the article in the database"""
         with connection.cursor() as cursor:
             try:
-                cursor.execute(f'''
-                    INSERT INTO Articles (`title`, `text`, `date`, `url`, `image`,`topic_url`) 
-                    VALUES (
-                            `{self.title}`, 
-                            `{self.text}`, 
-                            `{self.date}`, 
-                            `{self.url}`,
-                            `{self.img}`,
-                            `{topic_url}`);''')
+                variaable= f'INSERT INTO articles (title, text, date, url, image,topic_url) VALUES ({self.title}, {self.text}, {self.date}, {self.url},{self.img},{topic_url});'
+                print(variaable)
+                cursor.execute(variaable)
                 cursor.commit()
             except Exception as e:
                 print(e)
