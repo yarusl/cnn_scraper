@@ -1,7 +1,10 @@
-use mydb;
+DROP DATABASE bbc_scraper;
+CREATE DATABASE bbc_scraper;
+USE bbc_scraper;
+
 CREATE TABLE `article` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `url` int UNIQUE NOT NULL,
+  `url` tinytext UNIQUE NOT NULL,
   `title` tinytext,
   `r_date` date,
   `img` tinytext,

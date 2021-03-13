@@ -1,0 +1,74 @@
+Table article {
+  id int [pk, increment]
+  url tinytext [not null, unique]
+  title tinytext
+  r_date date
+  img tinytext
+  txt_id int 
+  author_id int
+  section_id int
+}
+
+Table author {
+  id int [pk, increment]
+  name tinytext [not null, unique]
+  title tinytext
+}
+
+Table section {
+  id int [pk, increment]
+  name tinytext [not null, unique]
+  url tinytext [not null, unique]
+}
+
+Table txt {
+  id int [pk, increment]
+  summary text
+  article_text text
+}
+
+
+Table article_label {
+  id int [pk, increment]
+  label_id int
+  article_id int
+}
+
+
+Table label {
+  id int [pk, increment]   
+  name tinytext [not null, unique]
+  url tinytext [not null, unique]
+}
+
+Table article_link {
+  id int [pk, increment]
+  article_id int 
+  link_id int
+}
+
+Table link {
+  id int [pk, increment]  
+  url tinytext 
+}
+
+
+Ref: article.author_id > author.id 
+Ref: article.section_id > section.id
+Ref: txt.id - article.txt_id
+
+Ref: article_label.article_id > article.id
+Ref: article_label.label_id > label.id
+
+Ref: article_link.article_id > article.id
+Ref: article_link.link_id > link.id
+
+//Ref: U.country_code > countries.code  
+//Ref: merchants.country_code > countries.code
+//  quantity int [default: 1] // default value
+//  user_id int [not null, unique]
+//Ref: merchant_periods.(merchant_id, country_code) > merchants.(id, country_code)
+
+
+//Ref: "section"."id" < "section"."id"
+//link: https://dbdiagram.io/d/604d1b38fcdcb6230b24025e
