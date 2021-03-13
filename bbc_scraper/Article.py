@@ -13,6 +13,18 @@ connection = pymysql.connect(host=HOST,
 
 class Article:
     def __init__(self, title, short_text, date, url, img):
+        """We initialise the attributes of an article:
+        title: title of the article.
+        date: date on which the article was posted.
+        url: url of the article.
+        img: Image in the article when there is one.
+        author: Author of the article.
+        author_pos: Job Title of the author.
+        short_text: short summary of the article (1 to 2 lines in general). Scraped from the "News update" section at the bottom of the page.
+        text: Full text of the article.
+        rel_topics: flags that say to which topics an article is related. e.g. "Tesla acquires a company". Topics will be "Electric Cars", "Elon Musk", "M and A"
+        rel_articles: other articles linked to this article.
+        """
         self.title = title
         self.short_text = short_text
         self.date = date
@@ -51,7 +63,6 @@ class Article:
                 self.author_pos = author.span.contents[2]
             except IndexError as e:
                 print(f"Job position not written in position 2 of the span.content section {e}")
-
 
         # self.rel_articles
         # We save the related articles

@@ -38,6 +38,11 @@ def get_driver_path():
 
 
 def create_driver(mode, executable_path):
+    """
+    Create a Chromedriver ready for scraping with 2 modes
+    Mode by default = INTERACTIVE. Meaning we ask the user to choose the topic they want to scrape and the number of pages.
+    Other mode = SILENT. With input from the CLI the user can run the scrape directly from a URL. (see cli.py for details on usage)
+    """
     chrome_options = Options()
 
     if mode == SILENT_MODE:

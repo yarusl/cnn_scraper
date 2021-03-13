@@ -3,7 +3,11 @@ from constants import (SILENT_MODE, INTERACTIVE_MODE)
 
 
 def parse_args():
-    """Takes user input in CLI"""
+    """
+    Takes user input in CLI
+    arg1: -u url of the section to scrape
+    arg2: -p number of pages to scrape in the section
+    """
 
     # Managing exceptions
     try:

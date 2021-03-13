@@ -7,6 +7,20 @@
 - Scrapes latest news on any topic of the BBC website in the news section e.g.  [wales](https://www.bbc.com/news/wales) or [business](https://www.bbc.com/news/business)
 - Scrapes multiple pages of the latest news updates on a topic. 
 - If you're not sure which topic you want to scrape, the sraper will provide you a list of potential topics available for scraping.
+
+#### Main scraped information for each article - i.e. - Article class attributes
+
+title: title of the article. \
+date: date on which the article was posted. \
+url: url of the article. \
+img: Image in the article when there is one. \
+author: Author of the article.\
+author_pos: Job Title of the author.\
+short_text: short summary of the article (1 to 2 lines in general).\
+text: Full text of the article.\
+rel_topics: flags that say to which topics an article is related. \
+rel_articles: other articles linked to this article.  
+
 -------------
 # Usage
 ## Install and run in 4 steps
@@ -67,3 +81,5 @@ pages_to_scrape = 1
 The main issues you might face are related to the chromedriver. If you have any issues with the chromdriver it's recomended to find another one from [this link](https://chromedriver.chromium.org/downloads) and replace the existing chromedriver file with the one you download. 
 
 <b>If you found any bugs please report it on the [official report](https://github.com/yarusl/bbc_scraper.git) </b>
+
+-------------
