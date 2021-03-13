@@ -27,17 +27,17 @@ CREATE TABLE `topic` (
 
 CREATE TABLE `txt` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `summary` text,
+  `summary` text UNIQUE NOT NULL,
   `article_text` text
 );
 
-CREATE TABLE `article_label` (
+CREATE TABLE `article_tag` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `label_id` int,
+  `tag_id` int,
   `article_id` int
 );
 
-CREATE TABLE `label` (
+CREATE TABLE `tag` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` tinytext UNIQUE NOT NULL,
   `url` tinytext UNIQUE NOT NULL
@@ -51,6 +51,7 @@ CREATE TABLE `article_link` (
 
 CREATE TABLE `link` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` tinytext, 
   `url` tinytext
 );
 
@@ -60,9 +61,9 @@ ALTER TABLE `article` ADD FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id`);
 
 ALTER TABLE `article` ADD FOREIGN KEY (`txt_id`) REFERENCES `txt` (`id`);
 
-ALTER TABLE `article_label` ADD FOREIGN KEY (`article_id`) REFERENCES `article` (`id`);
+ALTER TABLE `article_tag` ADD FOREIGN KEY (`article_id`) REFERENCES `article` (`id`);
 
-ALTER TABLE `article_label` ADD FOREIGN KEY (`label_id`) REFERENCES `label` (`id`);
+ALTER TABLE `article_tag` ADD FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`);
 
 ALTER TABLE `article_link` ADD FOREIGN KEY (`article_id`) REFERENCES `article` (`id`);
 
