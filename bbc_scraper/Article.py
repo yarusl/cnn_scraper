@@ -61,8 +61,8 @@ class Article:
             self.author = author.strong.text
             try:
                 self.author_pos = author.span.contents[2]
-            except IndexError as e:
-                print(f"Job position not written in position 2 of the span.content section {e}")
+            except IndexError:
+                print(f"No job position given")
 
         # self.rel_articles
         # We save the related articles
@@ -70,6 +70,11 @@ class Article:
         rel_articles = soup.findAll("li", {"class": "e1nh2i2l2"})
         for link in rel_articles:
             self.rel_articles[link.p.span.text] = BBC_PROTOCOL + link.a["href"]
+    
+    def format_to_sql(self, val):
+        if val:
+            return val.replace('"', "'")
+        return val
 
     def __str__(self):
         return f"""
@@ -89,14 +94,40 @@ A summary to the article: {self.short_text}
 -------------------------------------------------------------------------
 
 """
+    def save_author(self, article, author, title):
+        # return author_id
+        pass
 
+    def save_text(self, article, short_text, long_text):
+        # return text_id
+        pass
+
+    def save_section(self, section):
+        pass
+
+    def save_topic(self, topics):
+        pass
+
+    def save_links(self, links):
+        pass
+    
     def save(self, topic_url):
         """Saves the article in the database"""
         with connection.cursor() as cursor:
             try:
-                variaable= f'INSERT INTO articles (title, text, date, url, image,topic_url) VALUES ({self.title}, {self.text}, {self.date}, {self.url},{self.img},{topic_url});'
-                print(variaable)
-                cursor.execute(variaable)
-                cursor.commit()
+                query = f"""
+                    INSERT INTO articles (title, text, date, url, image, topic_url) 
+                    VALUES (
+                        "kasdfjkdsaf", 
+                        "{self.format_to_sql(self.text)}", 
+                        "2018-01-01", 
+                        "{self.format_to_sql(self.url)}",
+                        "{self.format_to_sql(self.img)}",
+                        "{self.format_to_sql(topic_url)}"
+                    );
+                """
+                cursor.execute(query)
+                connection.commit()
             except Exception as e:
                 print(e)
+

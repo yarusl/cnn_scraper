@@ -22,8 +22,8 @@ USE `mydb` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`texts` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `short_text` MEDIUMTEXT NULL,
-  `text` LONGTEXT NULL,
+  `short_text` TEXT NULL,
+  `text` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -33,8 +33,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`authors` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  `position` VARCHAR(45) NULL,
+  `name` TINYTEXT NULL,
+  `position` TINYTEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -44,7 +44,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`sections` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
+  `name` TINYTEXT NULL,
+  `link` TINYTEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -54,11 +55,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`articles` (
   `idArticles` INT NOT NULL AUTO_INCREMENT,
-  `url` VARCHAR(200) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `title` VARCHAR(45) NULL,
+  `url` TINYTEXT NOT NULL,
+  `title` TINYTEXT NULL,
   `date` DATETIME NULL,
-  `image` VARCHAR(200) NULL,
+  `image` TINYTEXT NULL,
   `Texts_idTexts` INT UNSIGNED NOT NULL,
   `Authors_id` INT UNSIGNED NOT NULL,
   `Sections_id` INT UNSIGNED NOT NULL,
@@ -89,9 +89,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Articles_has_Articles` (
   `Articles_idArticles` INT NOT NULL,
-  `Articles_url` VARCHAR(200) NOT NULL,
   `Articles_idArticles1` INT NOT NULL,
-  `Articles_url1` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`Articles_idArticles`, `Articles_url`, `Articles_idArticles1`, `Articles_url1`),
   INDEX `fk_Articles_has_Articles_Articles2_idx` (`Articles_idArticles1` ASC, `Articles_url1` ASC) VISIBLE,
   INDEX `fk_Articles_has_Articles_Articles1_idx` (`Articles_idArticles` ASC, `Articles_url` ASC) VISIBLE,
@@ -113,10 +111,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Articles_has_Authors` (
   `Articles_idArticles` INT NOT NULL,
-  `Articles_url` VARCHAR(200) NOT NULL,
+  `Articles_url` TINYTEXT NOT NULL,
   `Authors_id` INT NOT NULL,
   `Authors_Articles_idArticles` INT NOT NULL,
-  `Authors_Articles_url` VARCHAR(200) NOT NULL,
+  `Authors_Articles_url` TINYTEXT NOT NULL,
   PRIMARY KEY (`Articles_idArticles`, `Articles_url`, `Authors_id`, `Authors_Articles_idArticles`, `Authors_Articles_url`),
   INDEX `fk_Articles_has_Authors_Authors1_idx` (`Authors_id` ASC, `Authors_Articles_idArticles` ASC, `Authors_Articles_url` ASC) VISIBLE,
   INDEX `fk_Articles_has_Authors_Articles1_idx` (`Articles_idArticles` ASC, `Articles_url` ASC) VISIBLE,
@@ -138,8 +136,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`topics=labels` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  `link` VARCHAR(150) NULL,
+  `name` TINYTEXT NULL,
+  `link` TINYTEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -172,8 +170,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`linked_articles` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(45) NULL,
-  `link` VARCHAR(200) NULL,
+  `title` TINYTEXT NULL,
+  `link` TINYTEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -183,7 +181,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`articles_has_linked_articles` (
   `articles_idArticles` INT NOT NULL,
-  `articles_url` VARCHAR(200) NOT NULL,
+  `articles_url` TINYTEXT NOT NULL,
   `articles_Texts_idTexts` INT NOT NULL,
   `articles_Authors_id` INT NOT NULL,
   `articles_Sections_id` INT NOT NULL,

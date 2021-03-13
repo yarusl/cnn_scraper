@@ -93,7 +93,7 @@ def main():
 
     bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     bbc_scraper.scrape()
-    print(bbc_scraper)
+    #print(bbc_scraper)
     bbc_scraper.save()
     del bbc_scraper
 
