@@ -2,20 +2,22 @@
 
 ![](https://raw.githubusercontent.com/yarusl/bbc_scraper/main/img/logo.png)
 
-## Features
+## Main Features of the scraper
 
-- Scrapes latest news on any topic e.g.  [wales](https://www.bbc.com/news/wales) or [business](https://www.bbc.com/news/business)
-- Scrapes multiple pages of the latest news updates on a topic
-- If you're not sure which topic you want to scrape, the sraper will provide you a list of potentialy available topics
+- Scrapes latest news on any topic of the BBC website in the news section e.g.  [wales](https://www.bbc.com/news/wales) or [business](https://www.bbc.com/news/business)
+- Scrapes multiple pages of the latest news updates on a topic. 
+- If you're not sure which topic you want to scrape, the sraper will provide you a list of potential topics available for scraping.
 -------------
-
 # Usage
+## Install and run in 4 steps
+### Step1 - Clone the git repository
 To use the scraper simply download the project and go to the project main directory:
 
 `$ git clone https://github.com/yarusl/bbc_scraper.git`
 
 `$ cd bbc_scraper/bbc_scraper`
 
+#### Ensure the right permissions are in place.
 If you're using linux or mac you should run this command before running the main.py script (once it's done, you don't have to run this command anymore in the future):
 
 `$ chmod 755 drivers/*`
@@ -24,6 +26,22 @@ And then run the main.py file:
 
 `$ python3 main.py`
 
+### Step 2 - Set the parameters you want in the settings.py file
+HOST = enter your mySQL host. Leave it as parametered if you are unsure if it needs changing.
+USER = enter your mySQL user name
+PASSWORD: enter your mySQL user password
+DATABASE: name of the database you will be using. By default "mydb" (created from the init.sql file - see Step 3)
+
+### Step 3 - run the init.sql file
+- Go into your CLI
+- Run your mysql
+- Run the init.sql file that is located in the main directory of our BBC scraper.
+
+### Step 4 - Run the scraper
+1) Choose your mode (by default = Interactive)
+2) Run the main.py 
+
+-------------
 ## Modes
 #### Interactive mode
 The scraper has two modes, the first one is the interactive mode and it is the default mode. When the scraper runs in the interactive mode it will check which news topics could be potentially scraped. Some of them will be scrapable, some of them not. It depends on if the news topic has a "latest updates"section on the page.  
@@ -43,6 +61,7 @@ topic_url = "https://www.bbc.com/news/wales"  # your url example: "https://www.b
 pages_to_scrape = 1
 </pre>
 
+-------------
 ## Troubleshooting
 
 The main issues you might face are related to the chromedriver. If you have any issues with the chromdriver it's recomended to find another one from [this link](https://chromedriver.chromium.org/downloads) and replace the existing chromedriver file with the one you download. 
