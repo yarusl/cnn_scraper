@@ -10,7 +10,7 @@ CREATE TABLE `article` (
   `img` tinytext,
   `txt_id` int,
   `author_id` int,
-  `section_id` int
+  `topic_id` int
 );
 
 CREATE TABLE `author` (
@@ -19,7 +19,7 @@ CREATE TABLE `author` (
   `title` tinytext
 );
 
-CREATE TABLE `section` (
+CREATE TABLE `topic` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` tinytext UNIQUE NOT NULL,
   `url` tinytext UNIQUE NOT NULL
@@ -56,7 +56,7 @@ CREATE TABLE `link` (
 
 ALTER TABLE `article` ADD FOREIGN KEY (`author_id`) REFERENCES `author` (`id`);
 
-ALTER TABLE `article` ADD FOREIGN KEY (`section_id`) REFERENCES `section` (`id`);
+ALTER TABLE `article` ADD FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id`);
 
 ALTER TABLE `article` ADD FOREIGN KEY (`txt_id`) REFERENCES `txt` (`id`);
 
