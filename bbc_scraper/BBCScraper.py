@@ -2,6 +2,7 @@ from Article import Article
 from constants import BBC_NEWS
 from bs4 import BeautifulSoup as bs
 
+
 class BBCScraper:
     def __init__(self, driver, topic_url, pages_to_scrape=1):
         if pages_to_scrape <= 0:
@@ -121,4 +122,4 @@ class BBCScraper:
         try:
             self.driver.quit()
         except Exception as e:
-            print("the delete function did not work on its try due to : {e}")
+            print(f"the delete function did not work on its try due to : {e}")

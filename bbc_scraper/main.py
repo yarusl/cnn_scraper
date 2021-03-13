@@ -29,12 +29,11 @@ def get_driver_path():
         'win32': "./drivers/chromedriver.exe"
     }
     if sys.platform not in platforms:
-        raise Exception('Unknown platform: %s' % sys.platform, \
-                        "\nYou should download the chromedriver yourself " \
-                        "and write the path to the chromedriver in the " \
-                        "variable 'path_to_driver', which is located in the" \
+        raise Exception('Unknown platform: %s' % sys.platform,
+                        "\nYou should download the chromedriver yourself " 
+                        "and write the path to the chromedriver in the " 
+                        "variable 'path_to_driver', which is located in the" 
                         "'main' function")
-
     return platforms[sys.platform]
 
 
@@ -68,14 +67,24 @@ def main():
     You also need to scpecify the path to the webdriver you're 
     using in the 'path_to_driver' variable
     """
+
     global topic_url, mode, pages_to_scrape
     path_to_driver = get_driver_path()
     driver = create_driver(mode, path_to_driver)
 
     if mode == INTERACTIVE_MODE:
-        topics = get_available_topics(driver)
-        topic_url = topic_selector(topics)
-        pages_to_scrape = int(input("How many pages you want to scrape? "))
+        try:
+            topics = get_available_topics(driver)
+            topic_url = topic_selector(topics)
+            pages_to_scrape = int(input("How many pages you want to scrape? "))
+        except ValueError as e:
+            print(f"the interactive mode did not work on its try due to a ValueError: {e}")
+        except TypeError as e:
+            print(f"the interactive mode did not work on its try due to a TypeError: {e}")
+        except SyntaxError as e:
+            print(f"the interactive mode did not work on its try due to a SyntaxError: {e}")
+        except Exception as e:
+            print(f"the interactive mode did not work on its try due a general exception: {e}")
 
     bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     bbc_scraper.scrape()
