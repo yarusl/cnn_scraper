@@ -117,6 +117,9 @@ class BBCScraper:
         res += f"Articles scraped: {len(self.articles)}"
         return res
 
+    def print_info(self):
+        print(self.__str__())
+
     def __del__(self):
         """ closes the browser """
         try:
