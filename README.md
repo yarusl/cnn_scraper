@@ -80,6 +80,6 @@ pages_to_scrape = 1
 
 The main issues you might face are related to the chromedriver. If you have any issues with the chromdriver it's recomended to find another one from [this link](https://chromedriver.chromium.org/downloads) and replace the existing chromedriver file with the one you download. 
 
-<b>If you found any bugs please report it on the [official report](https://github.com/yarusl/bbc_scraper.git) </b>
+<b>If you found any bugs please report it on the [official report](https://github.com/yarusl/bbc_scraper/issues) </b>
 
 -------------
