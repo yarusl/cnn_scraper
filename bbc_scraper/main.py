@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from settings import mode, pages_to_scrape, topic_url
+from os import path 
 
 from interactive import (
     get_available_topics,
@@ -21,20 +22,23 @@ def get_driver_path():
     returns the path to the driver 
     according to the operation system
     """
+    parent_dir = path.dirname(path.dirname(path.abspath(__file__)))
     platforms = {
-        'linux': "./drivers/l_chromedriver",
-        'linux1': "./drivers/l_chromedriver",
-        'linux2': "./drivers/l_chromedriver",
-        'darwin': "./drivers/chromedriver",
-        'win32': "./drivers/chromedriver.exe"
+        'linux': "drivers/l_chromedriver",
+        'linux1': "drivers/l_chromedriver",
+        'linux2': "drivers/l_chromedriver",
+        'darwin': "drivers/chromedriver",
+        'win32': "drivers\\chromedriver.exe"
     }
+
     if sys.platform not in platforms:
         raise Exception('Unknown platform: %s' % sys.platform,
                         "\nYou should download the chromedriver yourself " 
                         "and write the path to the chromedriver in the " 
                         "variable 'path_to_driver', which is located in the" 
                         "'main' function")
-    return platforms[sys.platform]
+    
+    return path.join(parent_dir, platforms[sys.platform])
 
 
 def create_driver(mode, executable_path):
@@ -93,7 +97,7 @@ def main():
 
     bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     bbc_scraper.scrape()
-    #print(bbc_scraper)
+    print(bbc_scraper)
     bbc_scraper.save()
     del bbc_scraper
 
