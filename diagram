@@ -64,10 +64,4 @@ Ref: article_tag.tag_id > tag.id
 Ref: article_link.article_id > article.id
 Ref: article_link.link_id > link.id
 
-//Ref: U.country_code > countries.code  
-//Ref: merchants.country_code > countries.code
-//  quantity int [default: 1] // default value
-//  user_id int [not null, unique]
-//Ref: merchant_periods.(merchant_id, country_code) > merchants.(id, country_code)
-
 //link: https://dbdiagram.io/d/604d1b38fcdcb6230b24025e
