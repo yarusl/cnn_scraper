@@ -6,7 +6,7 @@ CREATE TABLE `article` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `url` tinytext UNIQUE NOT NULL,
   `title` tinytext,
-  `r_date` date,
+  `r_date` tinytext,
   `img` tinytext,
   `txt_id` int,
   `author_id` int,

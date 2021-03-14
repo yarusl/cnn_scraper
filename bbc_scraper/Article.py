@@ -89,63 +89,57 @@ A summary to the article: {self.short_text}
 -------------------------------------------------------------------------
 
 """
-    def format_to_sql(self, val):
-        if val:
-            return val.replace('"', "'")
-        return val
+    
+    def get_id(self, fetched):
+        """ 
+        returns id if not none 
+        """
+        if fetched:
+            return fetched["id"]
+        return None
 
     def save_author(self, name, title):
-        # return author_id
+        """ saves the author and returns his id """
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
                         INSERT INTO author (name, title)
-                        VALUES (
-                            "{self.format_to_sql(name)}",
-                            "{self.format_to_sql(title)}" 
-                            );
-                    """)
+                        VALUES ( %s, %s );""", 
+                    (name, title))
                 
                 connection.commit()
             except pymysql.err.IntegrityError:
                 pass
 
-            cursor.execute(f"SELECT * FROM author WHERE name = \"{name}\" limit 1;")
-            return cursor.fetchone()["id"]
+            cursor.execute(f"SELECT * FROM author WHERE name = %s limit 1;", (name,))
+            return self.get_id(cursor.fetchone())
 
     def save_text(self, summary, article_text):
+        """ saves text and returns its id"""
         with connection.cursor() as cursor:
-            try:
-                cursor.execute(f"""
-                        INSERT INTO txt (summary, article_text)
-                        VALUES (
-                            "{self.format_to_sql(summary)}",
-                            "{self.format_to_sql(article_text)}" 
-                            );
-                    """)
-                connection.commit()
-            except pymysql.err.IntegrityError:
-                pass
-
             cursor.execute(f"""
+                    INSERT INTO txt (summary, article_text)
+                    VALUES (%s, %s); """, (summary, article_text ))
+            connection.commit()
+
+            query = f"""
                 SELECT * FROM txt 
                 WHERE 
-                    summary=\"{summary}\" and 
-                    article_text=\"{article_text}\" 
-                limit 1;""")
+                    summary=%s and 
+                    article_text=%s 
+                limit 1;"""
+            cursor.execute(query, (summary, article_text ))
             
-            return cursor.fetchone()["id"]
+            return self.get_id(cursor.fetchone())
 
     def save_topic(self, name, url):
+        """ saves topic and returns its id """
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
                         INSERT INTO topic (name, url)
-                        VALUES (
-                            "{self.format_to_sql(name)}",
-                            "{self.format_to_sql(url)}" 
-                            );
-                    """)
+                        VALUES ( %s, %s);""", 
+                        (name, url))
                 connection.commit()
             except pymysql.err.IntegrityError:
                 pass
@@ -153,38 +147,40 @@ A summary to the article: {self.short_text}
             cursor.execute(f"""
                 SELECT * FROM topic 
                 WHERE 
-                    name=\"{name}\" 
-                limit 1;""")
+                    name= %s 
+                limit 1;""", (name,))
             
-            return cursor.fetchone()["id"]
+            return self.get_id(cursor.fetchone())
 
     def get_author_id(self):
+        """ returns authors id if author is defined """
         if self.author:
             return self.save_author(self.author, self.author_pos)
         return None
 
     def get_text_id(self):
+        """ returns text id if short text is defined """
         if self.short_text:
             return self.save_text(self.short_text, self.text)
         return None
 
     def get_topic_name(self, topic_url):
+        """ extracts topic name from ropic url """
         return '/'.join(topic_url.split('/')[4:])
 
     def get_topic_id(self, topic_url):
+        """ returns topic id """
         topic_name = self.get_topic_name(topic_url)
         return self.save_topic(topic_name, topic_url)
 
     def save_tag(self, name, url):
+        """ saves one tag and returns its id """
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
                         INSERT INTO tag (name, url)
-                        VALUES (
-                            "{self.format_to_sql(name)}",
-                            "{self.format_to_sql(url)}" 
-                            );
-                    """)
+                        VALUES (%s, %s);""", 
+                        (name, url))
                 connection.commit()
             except pymysql.err.IntegrityError:
                 pass
@@ -192,40 +188,39 @@ A summary to the article: {self.short_text}
             cursor.execute(f"""
                 SELECT * FROM tag 
                 WHERE 
-                    name=\"{name}\" 
-                limit 1;""")
+                    name = %s 
+                limit 1;""", 
+                (name,))
             
-            return cursor.fetchone()["id"]
+            return self.get_id(cursor.fetchone())
     
     def save_article_tag(self, article_id, tag_id):
+        """ saves a relationship between a tag and article """
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
                         INSERT INTO article_tag (article_id, tag_id)
-                        VALUES (
-                            "{article_id}",
-                            "{tag_id}" 
-                            );
-                    """)
+                        VALUES (%s, %s);""", 
+                    (tag_id, article_id))
                 connection.commit()
             except pymysql.err.IntegrityError:
                 pass
 
     def save_tags(self, article_id):
+        """ saves all tags """
         for tag, tag_url in self.tags.items():
             tag_id = self.save_tag(tag, tag_url)
             self.save_article_tag(article_id, tag_id)
 
-    def save_link(self, name, url):
+    def save_link(self, name, url): 
+        """ saves one link to an article and returns its id """
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
                         INSERT INTO link (name, url)
-                        VALUES (
-                            "{self.format_to_sql(name)}",
-                            "{self.format_to_sql(url)}" 
-                            );
-                    """)
+                        VALUES (%s, %s);
+                    """, 
+                    (name, url))
                 connection.commit()
             except pymysql.err.IntegrityError:
                 pass
@@ -233,66 +228,57 @@ A summary to the article: {self.short_text}
             cursor.execute(f"""
                 SELECT * FROM link
                 WHERE 
-                    name=\"{name}\" 
-                limit 1;""")
+                    name= %s 
+                limit 1;""", 
+                (name,))
             
-            return cursor.fetchone()["id"]
+            return self.get_id(cursor.fetchone())
     
     def save_article_link(self, article_id, link_id):
+        """ saves a relationship between an article and link"""
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
                         INSERT INTO article_link (article_id, link_id)
-                        VALUES (
-                            "{article_id}",
-                            "{link_id}" 
-                            );
-                    """)
+                        VALUES (%s, %s);""", 
+                        (article_id, link_id))
                 connection.commit()
             except pymysql.err.IntegrityError:
                 pass
 
     def save_links(self, article_id):
+        """ saves all links """
         for link, link_url in self.links.items():
             link_id = self.save_link(link, link_url)
             self.save_article_link(article_id, link_id)
 
     def save(self, topic_url):
         """Saves the article in the database"""
-        author_id = self.get_author_id()
-        text_id = self.get_text_id()
-        topic_id = self.get_topic_id(topic_url)
-
-        articel_id = None
-
         with connection.cursor() as cursor:
-            try:
-                query = f"""
-                    INSERT INTO article (
-                        title, 
-                        r_date, 
-                        url, 
-                        img, 
-                        txt_id, 
-                        author_id, 
-                        topic_id
-                    ) VALUES (
-                        "{self.format_to_sql(self.title)}", 
-                        "2018-01-01",
-                        "{self.format_to_sql(self.url)}",
-                        "{self.format_to_sql(self.img)}",
-                        "{text_id}",
-                        "{author_id}",
-                        "{topic_id}"
-                    );"""
-                
-                cursor.execute(query)
-                connection.commit()
-            except Exception as e:
-                print(e)
+            cursor.execute(f'SELECT * FROM article WHERE url=%s', (self.url,))
+            if cursor.fetchone() != None:
+                return
 
-            cursor.execute(f'SELECT * FROM article WHERE url="{self.format_to_sql(self.url)}"')
-            articel_id = cursor.fetchone()["id"]
-
-        self.save_tags(articel_id)   
+        author_id = self.get_author_id()
+        topic_id = self.get_topic_id(topic_url)
+        text_id = self.get_text_id()
+        with connection.cursor() as cursor:
+            query = f"""
+                INSERT INTO article (
+                    title, 
+                    r_date, 
+                    url, 
+                    img, 
+                    txt_id, 
+                    author_id, 
+                    topic_id
+                ) VALUES ( %s, %s, %s, %s, %s, %s, %s );"""
+            
+            cursor.execute(query, (self.title, self.date, self.url, self.img, text_id, author_id, topic_id))
+            connection.commit()
+            
+            cursor.execute(f'SELECT * FROM article WHERE url=%s', (self.url,))
+            articel_id = self.get_id(cursor.fetchone())
+        
+        self.save_tags(articel_id)
         self.save_links(articel_id)
