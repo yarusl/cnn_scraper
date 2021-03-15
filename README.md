@@ -38,7 +38,7 @@ If you're using linux or mac you should run this command before running the main
 
 And then run the main.py file:
 
-`$ python3 main.py`
+`$ python3 main.py -d PATH_TO_DRIVER`
 
 ### Step 2 - Set the parameters you want in the settings.py file
 HOST = enter your mySQL host. Leave it as parametered if you are unsure if it needs changing.
