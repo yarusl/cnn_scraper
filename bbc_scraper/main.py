@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from settings import mode, pages_to_scrape, topic_url
 from os import path 
 
+from settings import driver_path
 from interactive import (
     get_available_topics,
     topic_selector
@@ -16,29 +17,6 @@ from BBCScraper import BBCScraper
 
 import sys
 
-
-def get_driver_path():
-    """ 
-    returns the path to the driver 
-    according to the operation system
-    """
-    parent_dir = path.dirname(path.dirname(path.abspath(__file__)))
-    platforms = {
-        'linux': "drivers/l_chromedriver",
-        'linux1': "drivers/l_chromedriver",
-        'linux2': "drivers/l_chromedriver",
-        'darwin': "drivers/chromedriver",
-        'win32': "drivers\\chromedriver.exe"
-    }
-
-    if sys.platform not in platforms:
-        raise Exception('Unknown platform: %s' % sys.platform,
-                        "\nYou should download the chromedriver yourself " 
-                        "and write the path to the chromedriver in the " 
-                        "variable 'path_to_driver', which is located in the" 
-                        "'main' function")
-    
-    return path.join(parent_dir, platforms[sys.platform])
 
 
 def create_driver(mode, executable_path):
@@ -74,12 +52,11 @@ def main():
     you how many pages you want to scrape.
 
     You also need to scpecify the path to the webdriver you're 
-    using in the 'path_to_driver' variable
+    using in the 'driver_path' variable
     """
-
-    global topic_url, mode, pages_to_scrape
-    path_to_driver = get_driver_path()
-    driver = create_driver(mode, path_to_driver)
+    
+    global topic_url, mode, pages_to_scrape, driver_path
+    driver = create_driver(mode, driver_path)
 
     if mode == INTERACTIVE_MODE:
         try:
