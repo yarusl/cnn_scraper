@@ -28,6 +28,7 @@ def create_driver(mode, executable_path):
     Mode by default = INTERACTIVE. Meaning we ask the user to choose the topic they want to scrape and the number of pages.
     Other mode = SILENT. With input from the CLI the user can run the scrape directly from a URL. (see cli.py for details on usage)
     """
+    logger.debug("Running create_driver")
     chrome_options = Options()
 
     if mode == SILENT_MODE:
@@ -60,7 +61,7 @@ def main():
     You also need to scpecify the path to the webdriver you're 
     using in the 'driver_path' variable
     """
-    
+    logger.debug("Running main function")
     global topic_url, mode, pages_to_scrape, driver_path
     driver = create_driver(mode, driver_path)
     
@@ -74,13 +75,13 @@ def main():
                 pages_to_scrape = int(input("How many pages you want to scrape? "))
             
             except ValueError as e:
-                logger.debug(f"the interactive mode did not work on its try due to a ValueError: {e}")
+                logger.warning(f"the interactive mode did not work on its try due to a ValueError: {e}")
             except TypeError as e:
-                logger.debug(f"the interactive mode did not work on its try due to a TypeError: {e}")
+                logger.warning(f"the interactive mode did not work on its try due to a TypeError: {e}")
             except SyntaxError as e:
-                logger.debug(f"the interactive mode did not work on its try due to a SyntaxError: {e}")
+                logger.warning(f"the interactive mode did not work on its try due to a SyntaxError: {e}")
             except Exception as e:
-                logger.debug(f"the interactive mode did not work on its try due a general exception: {e}")
+                logger.warning(f"the interactive mode did not work on its try due a general exception: {e}")
 
     bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     bbc_scraper.scrape()
