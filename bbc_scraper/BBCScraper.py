@@ -56,8 +56,8 @@ class BBCScraper:
 
     def save(self):
         """Saves each one of the articles in the database"""
-        for article in self.articles:
-            article.save(self.topic_url)
+        #for article in self.articles:
+        #    article.save(self.topic_url)
 
     def get_text(self, el_soup):
         if el_soup is None:
