@@ -3,7 +3,7 @@ from constants import BBC_PROTOCOL
 from bs4 import BeautifulSoup as bs
 
 class Article:
-    def __init__(self, title, short_text=None, date, url, img):
+    def __init__(self, url, short_text=None):
         """ We initialise the attributes of an article:
         title: title of the article.
         date: date on which the article was posted.
@@ -18,61 +18,104 @@ class Article:
         """
         
         self.short_text = short_text
-        
         self.url = BBC_PROTOCOL + url
         
         self.author = None
         self.author_pos = None
-        self.img = img
-        self.date = date
-        self.title = title
-    
-    def scrape_tags(self, soup):
+        
+        self.img = None
+        self.date = None
+        self.title = None
+
+    def scrape_date(self):
+        """
+        scrapes the date
+        """
+        return self.soup.find('dd', {"class": 'e1ojgjhb2'}).text
+   
+    def scrape_title(self): 
+        """
+        scrapes the title
+        """
+        h1 = self.soup.find('h1')
+        return h1.text
+
+    def scrape_img(self):
+        """
+        scrapes the main image
+        """
+        images = self.soup.findAll("img", {"class": "ssrcss-evoj7m-Image ee0ct7c0"})
+        if not len(images):
+            return None
+        return images[0]["src"]
+
+    def scrape_tags(self):
+        """
+        scrapes tags related to the article
+        """
         # BBC Related topics for this article are saved in a dict
         tags = {}
-        for ele in soup.findAll("a", {"class": "ed0g1kj1"}):
+        for ele in self.soup.findAll("a", {"class": "ed0g1kj1"}):
             tags[ele.text] = ele["href"]
 
         return tags
 
-    def scrape_text(self, soup):
+    def scrape_text(self):
+        """
+        scrapes the text of the article
+        """
         # We save the entire article text
         text = ""
-        for text_bloc in soup.findAll("div", {"class": "e1xue1i83"}):
+        for text_bloc in self.soup.findAll("div", {"class": "e1xue1i83"}):
             text += text_bloc.text
         return text
 
-    def scrape_author(self, soup):
+    def scrape_author(self):
+        """
+        scrapes the author
+        """
         # We save the author
-        author = soup.find("p", {"class": "e5xb54n0"})
+        author = self.soup.find("p", {"class": "e5xb54n0"})
         if author is not None:
             author_name = author.strong.text
             try:
                 author_pos = author.span.contents[2]
             except IndexError:
+                author_pos = None    
                 print(f"No job position given")
-        return author_name, author_pos
+            
+            return author_name, author_pos
+        return None, None
 
-    def scrape_links(self, soup):
+    def scrape_links(self):
+        """
+        scrapes links to other related articles
+        """
         # We save the related articles
-        links = {}
-        links = soup.findAll("li", {"class": "e1nh2i2l2"})
+        ret_links = {}
+        links = self.soup.findAll("li", {"class": "e1nh2i2l2"})
         for link in links:
-            links[link.p.span.text] = BBC_PROTOCOL + link.a["href"]
-        return links
+            print(link.p.span.text)
+            print(links)
+            ret_links[link.p.span.text] = BBC_PROTOCOL + link.a["href"]
+        
+        return ret_links
 
-    def scrape_art(self, driver):
+    def scrape_article(self, driver):
         """For each article that was scraped from news update, we scrape as much information as possible"""
-
+        
         print(self.url)
         driver.get(self.url)
         page = driver.page_source
-        soup = bs(page, 'html.parser')
+        self.soup = bs(page, 'html.parser')
 
-        self.tags = self.scrape_tags(soup)
-        self.text = self.scrape_text(soup)
-        self.author_name, self.author_pos = self.scrape_author(soup)
-        self.links = self.scrape_links(soup)
+        self.date = self.scrape_date()
+        self.title = self.scrape_title()
+        self.img = self.scrape_img()
+        self.tags = self.scrape_tags()
+        self.text = self.scrape_text()
+        self.author_name, self.author_pos = self.scrape_author()
+        self.links = self.scrape_links()
 
     def __str__(self):
         return f"""
@@ -92,5 +135,4 @@ A summary to the article: {self.short_text}
 -------------------------------------------------------------------------
 
 """
-    
-    
+
