@@ -1,8 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from settings import mode, pages_to_scrape, topic_url
-from os import path 
-
+from os import path
 from settings import driver_path
 from interactive import (
     get_available_topics,
