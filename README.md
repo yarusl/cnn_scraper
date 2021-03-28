@@ -31,7 +31,7 @@ To use the scraper simply download the project and go to the project main direct
 
 `$ cd bbc_scraper/bbc_scraper`
 
-#### Ensure the right permissions are in place.
+##### Ensure the right permissions are in place.
 If you're using linux or mac you should run this command before running the main.py script (once it's done, you don't have to run this command anymore in the future):
 
 `$ chmod 755 drivers/*`
@@ -74,6 +74,12 @@ The second one is the silent mode. In this mode you have to specify the link to 
 topic_url = "https://www.bbc.com/news/wales"  # your url example: "https://www.bbc.com/news/the_reporters"
 pages_to_scrape = 1
 </pre>
+-------------
+## CLI usage
+Arguments for the Command Line interface:\
+'-u', '--url', type=str, help='foo help' : --> url of the section to scrape in case you want to use the silent mode. No argument needed for interactive mode.\
+'-p', '--pages', type=int, default=1, help='baz help' : --> number of pages to scrape in the section.\
+'-d', '--driver', type=str, help='foo help' : --> your path to your driver.\
 
 -------------
 ## Troubleshooting
