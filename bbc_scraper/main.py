@@ -64,9 +64,8 @@ def main():
             try:
                 topic = get_available_topics(driver)
                 topic_url = topic_selector(topic)
-                print("sadfdsf")
-                print(topic_url)
                 pages_to_scrape = int(input("How many pages you want to scrape? "))
+            
             except ValueError as e:
                 print(f"the interactive mode did not work on its try due to a ValueError: {e}")
             except TypeError as e:
