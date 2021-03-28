@@ -8,4 +8,6 @@ DATABASE = 'bbc_scraper'
 USER = 'root'
 PASSWORD = ''
 
-
+# Settings for the logger
+LOG = 'log_file.log'
+BBCname = 'BBCscrapper'

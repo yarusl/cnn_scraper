@@ -16,10 +16,8 @@ class Article:
         rel_topics: flags that say to which topics an article is related. e.g. "Tesla acquires a company". Topics will be "Electric Cars", "Elon Musk", "M and A"
         links: other articles linked to this article.
         """
-        
         self.short_text = short_text
         self.url = BBC_PROTOCOL + url
-        
         self.author = None
         self.author_pos = None
  
