@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from settings import mode, pages_to_scrape, topic_url
 from os import path
-from settings import driver_path
+from settings import driver_path, DEMO
 from interactive import (
     get_available_topics,
     topic_selector
@@ -56,27 +56,31 @@ def main():
     
     global topic_url, mode, pages_to_scrape, driver_path
     driver = create_driver(mode, driver_path)
-
+    
     if mode == INTERACTIVE_MODE:
-        try:
-            topics = get_available_topics(driver)
-            topic_url = topic_selector(topics)
-            pages_to_scrape = int(input("How many pages you want to scrape? "))
-        except ValueError as e:
-            print(f"the interactive mode did not work on its try due to a ValueError: {e}")
-        except TypeError as e:
-            print(f"the interactive mode did not work on its try due to a TypeError: {e}")
-        except SyntaxError as e:
-            print(f"the interactive mode did not work on its try due to a SyntaxError: {e}")
-        except Exception as e:
-            print(f"the interactive mode did not work on its try due a general exception: {e}")
+        if DEMO:
+            topic_url = 'https://www.bbc.com/news/uk/'
+        else: 
+            try:
+                topic = get_available_topics(driver)
+                topic_url = topic_selector(topic)
+                print("sadfdsf")
+                print(topic_url)
+                pages_to_scrape = int(input("How many pages you want to scrape? "))
+            except ValueError as e:
+                print(f"the interactive mode did not work on its try due to a ValueError: {e}")
+            except TypeError as e:
+                print(f"the interactive mode did not work on its try due to a TypeError: {e}")
+            except SyntaxError as e:
+                print(f"the interactive mode did not work on its try due to a SyntaxError: {e}")
+            except Exception as e:
+                print(f"the interactive mode did not work on its try due a general exception: {e}")
 
     bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     bbc_scraper.scrape()
     bbc_scraper.print_info()
     bbc_scraper.save()
     del bbc_scraper
-
 
 if __name__ == "__main__":
     main()
