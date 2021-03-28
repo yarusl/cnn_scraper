@@ -1,6 +1,7 @@
 import pymysql
 from constants import BBC_PROTOCOL
 from bs4 import BeautifulSoup as bs
+from logger import logger
 
 class Article:
     def __init__(self, url, short_text=None):
@@ -38,6 +39,7 @@ class Article:
         """
         scrapes the main image
         """
+        logger.debug('Running scrape_img')
         images = self.soup.findAll("img", {"class": "ssrcss-evoj7m-Image ee0ct7c0"})
         if not len(images):
             return None
@@ -48,6 +50,7 @@ class Article:
         scrapes tags related to the article
         """
         # BBC Related topics for this article are saved in a dict
+        logger.debug('Running scrape_tags')
         tags = {}
         for ele in self.soup.findAll("a", {"class": "ed0g1kj1"}):
             tags[ele.text] = ele["href"]
@@ -58,6 +61,7 @@ class Article:
         """
         scrapes the text of the article
         """
+        logger.debug('Running scrape_text')
         # We save the entire article text
         text = ""
         for text_bloc in self.soup.findAll("div", {"class": "e1xue1i83"}):
@@ -69,14 +73,15 @@ class Article:
         scrapes the author
         """
         # We save the author
+        logger.debug('Running scrape_author')
         author = self.soup.find("p", {"class": "e5xb54n0"})
         if author is not None:
             author_name = author.strong.text
             try:
                 author_pos = author.span.contents[2]
             except IndexError:
-                author_pos = None    
-                print(f"No job position given")
+                author_pos = None
+                logger.error(f"No job position given")
             
             return author_name, author_pos
         return None, None

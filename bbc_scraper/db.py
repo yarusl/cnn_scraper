@@ -1,14 +1,22 @@
 from settings import USER, PASSWORD, HOST, DATABASE
 import pymysql
+from logger import logger
 
+
+# Connecting to the database
+logger.debug('Connecting to the database with pymysql')
 connection = pymysql.connect(host=HOST,
                              user=USER,
                              password=PASSWORD,
                              database=DATABASE,
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
-                             
+
+
 class DB():
+    """
+    This class purpose is to interact in SQL with the database. This class is used by Article.py to store the scrapped data.
+    """
     def __init__(self, article):
         self.article = article
 
@@ -22,6 +30,7 @@ class DB():
 
     def save_author(self, name, title):
         """ saves the author and returns his id """
+        logger.debug('Running save_author')
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
@@ -38,6 +47,7 @@ class DB():
 
     def save_text(self, summary, article_text):
         """ saves text and returns its id"""
+        logger.debug('Running save_text')
         with connection.cursor() as cursor:
             cursor.execute(f"""
                     INSERT INTO txt (summary, article_text)
@@ -56,6 +66,7 @@ class DB():
 
     def save_topic(self, name, url):
         """ saves topic and returns its id """
+        logger.debug('Running save_topics')
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
@@ -85,7 +96,7 @@ class DB():
         """ returns text id if short text is defined """
         short_text = self.article.get_short_text()
         text = self.article.get_text()
-        
+
         if text:
             return self.save_text(short_text, text)
         return None
@@ -101,6 +112,7 @@ class DB():
 
     def save_tag(self, name, url):
         """ saves one tag and returns its id """
+        logger.debug('Running save_tag')
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
@@ -109,6 +121,7 @@ class DB():
                         (name, url))
                 connection.commit()
             except pymysql.err.IntegrityError:
+                logger.error('Integrity error raised in save_tag from db.py')
                 pass
 
             cursor.execute(f"""
@@ -122,6 +135,7 @@ class DB():
     
     def save_article_tag(self, article_id, tag_id):
         """ saves a relationship between a tag and article """
+        logger.debug('Running save_article_tag')
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
@@ -130,17 +144,19 @@ class DB():
                     (tag_id, article_id))
                 connection.commit()
             except pymysql.err.IntegrityError:
+                logger.error('Integrity error raised in save_article_tag from db.py')
                 pass
 
     def save_tags(self, article_id):
         """ saves all tags """
-        
+        logger.debug('Running save_tags')
         for tag, tag_url in self.article.get_tags().items():
             tag_id = self.save_tag(tag, tag_url)
             self.save_article_tag(article_id, tag_id)
 
     def save_link(self, name, url): 
         """ saves one link to an article and returns its id """
+        logger.debug('Running save_link')
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
@@ -150,6 +166,7 @@ class DB():
                     (name, url))
                 connection.commit()
             except pymysql.err.IntegrityError:
+                logger.error('Integrity error raised in save_link from db.py')
                 pass
 
             cursor.execute(f"""
@@ -165,6 +182,7 @@ class DB():
         """ saves a relationship between an article and link"""
         with connection.cursor() as cursor:
             try:
+                logger.debug('Running save_article_links')
                 cursor.execute(f"""
                         INSERT INTO article_link (article_id, link_id)
                         VALUES (%s, %s);""", 
@@ -175,6 +193,7 @@ class DB():
 
     def save_links(self, article_id):
         """ saves all links """
+        logger.debug('Running save_links')
         for link, link_url in self.article.get_links().items():
             link_id = self.save_link(link, link_url)
             self.save_article_link(article_id, link_id)
