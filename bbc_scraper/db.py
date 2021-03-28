@@ -14,20 +14,12 @@ connection = pymysql.connect(host=HOST,
 <<<<<<< HEAD
                              
 class DB():
-    def __init__(self, article):
-        self.article = article
-                
-=======
-
-
-class DB():
     """
     This class purpose is to interact in SQL with the database. This class is used by Article.py to store the scrapped data.
     """
     def __init__(self, article):
         self.article = article
->>>>>>> a777699065c1ce7360c3c1a4a688cbd20e4a5c9c
-
+                
     def get_id(self, fetched):
         """ 
         returns id if not none 
