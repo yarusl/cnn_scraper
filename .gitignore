@@ -2,3 +2,4 @@
 bbc_scraper/__init__.py
 .idea/
 bbc_scraper/__pycache__
+venv

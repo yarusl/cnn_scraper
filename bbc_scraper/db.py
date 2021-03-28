@@ -10,8 +10,8 @@ connection = pymysql.connect(host=HOST,
 
 
 class DB():
-    def __init__(self, aritcle):
-        self.aritcle = aritcle
+    def __init__(self, article):
+        self.article = article
         
     def get_id(self, fetched):
         """ 
