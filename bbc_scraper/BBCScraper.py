@@ -1,7 +1,7 @@
 from Article import Article
 from constants import BBC_NEWS
 from bs4 import BeautifulSoup as bs
-
+from settings import DEMO
 
 class BBCScraper:
     def __init__(self, driver, topic_url, pages_to_scrape=1):
@@ -50,7 +50,7 @@ class BBCScraper:
 
         # for each article present in the news update section we scrape all available data
         for article in self.articles:
-            article.scrape_art(self.driver)
+            article.scrape_article(self.driver)
 
         return self.articles
 
@@ -90,6 +90,9 @@ class BBCScraper:
         soup = bs(self.driver.page_source, 'html.parser')
         soup = soup.find("h2", {"id": "latest-updates"}).find_parent('div')
         elements = soup.find_all("li", {"class": "lx-stream__post-container"})
+        if DEMO:
+            elements = [elements[0]]
+
         for el_soup in elements:
             # FILTER articles to be scrapped
             # We will only take articles which have a url (to scrap a full content only)
