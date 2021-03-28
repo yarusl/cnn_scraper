@@ -7,6 +7,7 @@ def parse_args():
     Takes user input in CLI
     arg1: -u url of the section to scrape
     arg2: -p number of pages to scrape in the section
+    arg3: -d path to your driver
     """
 
     # Managing exceptions
