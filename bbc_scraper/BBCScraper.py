@@ -91,6 +91,10 @@ class BBCScraper:
         soup = soup.find("h2", {"id": "latest-updates"}).find_parent('div')
         elements = soup.find_all("li", {"class": "lx-stream__post-container"})
         for el_soup in elements:
+            # FILTER articles to be scrapped
+            # We will only take articles which have a url (to scrap a full content only)
+            # and that are on the news section of the website
+
             url = self.get_url(el_soup.find("a", {"class": "qa-story-cta-link"}))
             if url is None or url[0:6] != '/news/':
                 continue
@@ -98,10 +102,7 @@ class BBCScraper:
             text = self.get_text(el_soup.find("p", {"class": "lx-stream-related-story--summary"}))
             date = self.get_date(el_soup.find("span", {"class": "qa-visually-hidden-meta"}))
             img = self.get_src(el_soup.find("img", {"class": "lx-stream-related-story--index-image"}))
-
-            # FILTER articles to be scrapped
-            # We will only take articles which have a url (to scrap a full content only)
-            # and that are on the news section of the website
+            
             articles.append(Article(title, text, date, url, img))
 
         return articles
