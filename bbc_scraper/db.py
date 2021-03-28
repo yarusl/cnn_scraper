@@ -8,7 +8,6 @@ connection = pymysql.connect(host=HOST,
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
 
-
 class DB():
     def __init__(self, article):
         self.article = article

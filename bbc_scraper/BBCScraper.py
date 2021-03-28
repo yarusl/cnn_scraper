@@ -98,12 +98,9 @@ class BBCScraper:
             url = self.get_url(el_soup.find("a", {"class": "qa-story-cta-link"}))
             if url is None or url[0:6] != '/news/':
                 continue
-            title = self.get_text(el_soup.find("h3", {"class": "lx-stream-post__header-title"}))
+
             text = self.get_text(el_soup.find("p", {"class": "lx-stream-related-story--summary"}))
-            date = self.get_date(el_soup.find("span", {"class": "qa-visually-hidden-meta"}))
-            img = self.get_src(el_soup.find("img", {"class": "lx-stream-related-story--index-image"}))
-            
-            articles.append(Article(title, text, date, url, img))
+            articles.append(Article(url, text))
 
         return articles
 
