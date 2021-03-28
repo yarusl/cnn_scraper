@@ -8,3 +8,5 @@ DATABASE = 'bbc_scraper'
 # your variables
 USER = 'root'
 PASSWORD = ''
+
+

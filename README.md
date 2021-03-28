@@ -76,10 +76,10 @@ pages_to_scrape = 1
 </pre>
 -------------
 ## CLI usage
-Arguments for the Command Line interface:
-'-u', '--url', type=str, help='foo help' : --> url of the section to scrape in case you want to use the silent mode. No argument needed for interactive mode.
-'-p', '--pages', type=int, default=1, help='baz help' : --> number of pages to scrape in the section.
-'-d', '--driver', type=str, help='foo help' : --> your path to your driver.
+Arguments for the Command Line interface:\
+'-u', '--url', type=str, help='foo help' : --> url of the section to scrape in case you want to use the silent mode. No argument needed for interactive mode.\
+'-p', '--pages', type=int, default=1, help='baz help' : --> number of pages to scrape in the section.\
+'-d', '--driver', type=str, help='foo help' : --> your path to your driver.\
 
 -------------
 ## Troubleshooting
