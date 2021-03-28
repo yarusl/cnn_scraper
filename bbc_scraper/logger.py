@@ -1,6 +1,6 @@
 import sys
-import logging
 import settings
+import logging
 
 #LOGGING CODE
 logger = logging.getLogger(settings.BBCname)

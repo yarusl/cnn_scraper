@@ -1,3 +1,5 @@
+import logging
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from settings import mode, pages_to_scrape, topic_url
@@ -16,6 +18,8 @@ from BBCScraper import BBCScraper
 
 import sys
 
+from logger import logger
+
 
 
 def create_driver(mode, executable_path):
@@ -27,10 +31,13 @@ def create_driver(mode, executable_path):
     chrome_options = Options()
 
     if mode == SILENT_MODE:
+        logger.info("Silent mode chosen")
         chrome_options.add_argument("--headless")
     elif mode == INTERACTIVE_MODE:
+        logger.info("Interactive mode chosen")
         chrome_options.add_experimental_option("detach", True)
     else:
+        logger.debug("Invalid mode")
         raise Exception("Invalid mode")
 
     return webdriver.Chrome(executable_path=executable_path, options=chrome_options)
@@ -67,13 +74,13 @@ def main():
                 pages_to_scrape = int(input("How many pages you want to scrape? "))
             
             except ValueError as e:
-                print(f"the interactive mode did not work on its try due to a ValueError: {e}")
+                logger.debug(f"the interactive mode did not work on its try due to a ValueError: {e}")
             except TypeError as e:
-                print(f"the interactive mode did not work on its try due to a TypeError: {e}")
+                logger.debug(f"the interactive mode did not work on its try due to a TypeError: {e}")
             except SyntaxError as e:
-                print(f"the interactive mode did not work on its try due to a SyntaxError: {e}")
+                logger.debug(f"the interactive mode did not work on its try due to a SyntaxError: {e}")
             except Exception as e:
-                print(f"the interactive mode did not work on its try due a general exception: {e}")
+                logger.debug(f"the interactive mode did not work on its try due a general exception: {e}")
 
     bbc_scraper = BBCScraper(driver, topic_url, pages_to_scrape)
     bbc_scraper.scrape()
