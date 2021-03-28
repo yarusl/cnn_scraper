@@ -11,8 +11,7 @@ connection = pymysql.connect(host=HOST,
                              database=DATABASE,
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
-<<<<<<< HEAD
-                             
+                
 class DB():
     """
     This class purpose is to interact in SQL with the database. This class is used by Article.py to store the scrapped data.
