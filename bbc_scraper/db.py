@@ -7,11 +7,12 @@ connection = pymysql.connect(host=HOST,
                              database=DATABASE,
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
-
+                             
 class DB():
-    def __init__(self, aritcle):
-        self.aritcle = aritcle
-        
+    def __init__(self, article):
+        self.article = article
+                
+
     def get_id(self, fetched):
         """ 
         returns id if not none 
@@ -76,14 +77,18 @@ class DB():
 
     def get_author_id(self):
         """ returns authors id if author is defined """
-        if self.author:
-            return self.save_author(self.author, self.author_pos)
+        author, author_pos = self.article.get_author()
+        if author:
+            return self.save_author(author, author_pos)
         return None
 
     def get_text_id(self):
         """ returns text id if short text is defined """
-        if self.short_text:
-            return self.save_text(self.short_text, self.text)
+        short_text = self.article.get_short_text()
+        text = self.article.get_text()
+        
+        if text:
+            return self.save_text(short_text, text)
         return None
 
     def get_topic_name(self, topic_url):
@@ -130,7 +135,8 @@ class DB():
 
     def save_tags(self, article_id):
         """ saves all tags """
-        for tag, tag_url in self.tags.items():
+        
+        for tag, tag_url in self.article.get_tags().items():
             tag_id = self.save_tag(tag, tag_url)
             self.save_article_tag(article_id, tag_id)
 
@@ -170,14 +176,19 @@ class DB():
 
     def save_links(self, article_id):
         """ saves all links """
-        for link, link_url in self.links.items():
+        for link, link_url in self.article.get_links().items():
             link_id = self.save_link(link, link_url)
             self.save_article_link(article_id, link_id)
 
     def save(self, topic_url):
         """Saves the article in the database"""
+        url = self.article.get_url()
+        title = self.article.get_title() 
+        date = self.article.get_date()
+        img = self.article.get_img()
+
         with connection.cursor() as cursor:
-            cursor.execute(f'SELECT * FROM article WHERE url=%s', (self.url,))
+            cursor.execute(f'SELECT * FROM article WHERE url=%s', (url,))
             if cursor.fetchone() != None:
                 return
 
@@ -196,10 +207,10 @@ class DB():
                     topic_id
                 ) VALUES ( %s, %s, %s, %s, %s, %s, %s );"""
             
-            cursor.execute(query, (self.title, self.date, self.url, self.img, text_id, author_id, topic_id))
+            cursor.execute(query, (title, date, url, img, text_id, author_id, topic_id))
             connection.commit()
             
-            cursor.execute(f'SELECT * FROM article WHERE url=%s', (self.url,))
+            cursor.execute(f'SELECT * FROM article WHERE url=%s', (url,))
             articel_id = self.get_id(cursor.fetchone())
         
         self.save_tags(articel_id)
