@@ -95,11 +95,7 @@ class DB():
         """ returns text id if short text is defined """
         short_text = self.article.get_short_text()
         text = self.article.get_text()
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> a777699065c1ce7360c3c1a4a688cbd20e4a5c9c
+         
         if text:
             return self.save_text(short_text, text)
         return None
