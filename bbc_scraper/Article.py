@@ -22,11 +22,7 @@ class Article:
         
         self.author = None
         self.author_pos = None
-        
-        self.img = None
-        self.date = None
-        self.title = None
-
+ 
     def scrape_date(self):
         """
         scrapes the date
@@ -116,6 +112,33 @@ class Article:
         self.text = self.scrape_text()
         self.author_name, self.author_pos = self.scrape_author()
         self.links = self.scrape_links()
+
+    def get_url(self):
+        return self.url
+
+    def get_short_text(self):
+        return self.short_text
+
+    def get_date(self):
+        return self.date
+
+    def get_title(self):
+        return self.title
+
+    def get_img(self):
+        return self.img
+
+    def get_tags(self):
+        return self.tags
+    
+    def get_text(self):
+        return self.text
+
+    def get_author(self):
+        return self.author_name, self.author_pos
+    
+    def get_links(self):
+        return self.links
 
     def __str__(self):
         return f"""
