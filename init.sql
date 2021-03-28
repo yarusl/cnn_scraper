@@ -27,8 +27,8 @@ CREATE TABLE `topic` (
 
 CREATE TABLE `txt` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `summary` text UNIQUE NOT NULL,
-  `article_text` text
+  `summary` text, 
+  `article_text` text UNIQUE NOT NULL
 );
 
 CREATE TABLE `article_tag` (

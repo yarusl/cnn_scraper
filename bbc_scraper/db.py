@@ -148,11 +148,7 @@ class DB():
 
     def save_tags(self, article_id):
         """ saves all tags """
-<<<<<<< HEAD
-        
-=======
         logger.debug('Running save_tags')
->>>>>>> a777699065c1ce7360c3c1a4a688cbd20e4a5c9c
         for tag, tag_url in self.article.get_tags().items():
             tag_id = self.save_tag(tag, tag_url)
             self.save_article_tag(article_id, tag_id)
@@ -196,10 +192,7 @@ class DB():
 
     def save_links(self, article_id):
         """ saves all links """
-<<<<<<< HEAD
-=======
         logger.debug('Running save_links')
->>>>>>> a777699065c1ce7360c3c1a4a688cbd20e4a5c9c
         for link, link_url in self.article.get_links().items():
             link_id = self.save_link(link, link_url)
             self.save_article_link(article_id, link_id)
@@ -213,7 +206,10 @@ class DB():
 
         with connection.cursor() as cursor:
             cursor.execute(f'SELECT * FROM article WHERE url=%s', (url,))
-            if cursor.fetchone() != None:
+            adsf = cursor.fetchone()
+            if adsf != None:
+                print()
+                logger.debug(f"Article alread exists. Url: {url}")
                 return
 
         author_id = self.get_author_id()
@@ -239,3 +235,4 @@ class DB():
         
         self.save_tags(articel_id)
         self.save_links(articel_id)
+        print("saved")

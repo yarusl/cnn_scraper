@@ -2,6 +2,7 @@ from Article import Article
 from constants import BBC_NEWS
 from bs4 import BeautifulSoup as bs
 from settings import DEMO
+from db import DB
 
 class BBCScraper:
     def __init__(self, driver, topic_url, pages_to_scrape=1):
@@ -56,8 +57,8 @@ class BBCScraper:
 
     def save(self):
         """Saves each one of the articles in the database"""
-        #for article in self.articles:
-        #    article.save(self.topic_url)
+        for article in self.articles:
+            DB(article).save(self.topic_url)
 
     def get_text(self, el_soup):
         if el_soup is None:
@@ -90,9 +91,6 @@ class BBCScraper:
         soup = bs(self.driver.page_source, 'html.parser')
         soup = soup.find("h2", {"id": "latest-updates"}).find_parent('div')
         elements = soup.find_all("li", {"class": "lx-stream__post-container"})
-        if DEMO:
-            elements = [elements[0]]
-
         for el_soup in elements:
             # FILTER articles to be scrapped
             # We will only take articles which have a url (to scrap a full content only)
@@ -104,6 +102,8 @@ class BBCScraper:
 
             text = self.get_text(el_soup.find("p", {"class": "lx-stream-related-story--summary"}))
             articles.append(Article(url, text))
+            if DEMO:
+                break
 
         return articles
 
