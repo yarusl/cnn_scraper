@@ -161,24 +161,3 @@ A summary to the article: {self.short_text}
 -------------------------------------------------------------------------
 
 """
-
-if __name__ == '__main__':
-
-    from settings import mode, pages_to_scrape, topic_url
-    from os import path 
-    from db import DB 
-    import sys
-
-    article = Article('/news/somepage')
-    article.url = '/newsas/somepage'
-    article.short_text = '/news/somepage'
-    article.date = '/news/somepage'
-    article.title = '/news/somepage'
-    article.img = '/news/somepage'
-    article.tags = {}
-    article.text = '/news/somepage'
-    article.author_name = '/news/somepage'
-    article.author_pos = '/news/somepage'
-    article.links = {}
-    adsf = DB(article)
-    adsf.save('asdf')
