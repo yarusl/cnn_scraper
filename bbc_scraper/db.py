@@ -235,4 +235,3 @@ class DB():
         
         self.save_tags(articel_id)
         self.save_links(articel_id)
-        print("saved")
