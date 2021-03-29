@@ -27,15 +27,15 @@ class DB():
             return fetched["id"]
         return None
 
-    def save_author(self, name, title):
+    def save_author(self, name):
         """ saves the author and returns his id """
         logger.debug('Running save_author')
         with connection.cursor() as cursor:
             try:
                 cursor.execute(f"""
                         INSERT INTO author (name, title)
-                        VALUES ( %s, %s );""", 
-                    (name, title))
+                        VALUES ( %s );""", 
+                    (name, ))
                 
                 connection.commit()
             except pymysql.err.IntegrityError:
@@ -86,16 +86,16 @@ class DB():
 
     def get_author_id(self):
         """ returns authors id if author is defined """
-        author, author_pos = self.article.get_author()
+        author = self.article.get_author()
         if author:
-            return self.save_author(author, author_pos)
+            return self.save_author(author)
         return None
 
     def get_text_id(self):
         """ returns text id if short text is defined """
         short_text = self.article.get_short_text()
         text = self.article.get_text()
-         
+        
         if text:
             return self.save_text(short_text, text)
         return None
@@ -135,6 +135,30 @@ class DB():
             
             return self.get_id(cursor.fetchone())
     
+    def save_author(self, name): 
+        """ saves one link to an article and returns its id """
+        logger.debug('Running save_author')
+        with connection.cursor() as cursor:
+            try:
+                cursor.execute(f"""
+                        INSERT INTO author (name)
+                        VALUES (%s);
+                    """, 
+                    (name))
+                connection.commit()
+            except pymysql.err.IntegrityError:
+                logger.error('Integrity error raised in save_link from db.py')
+                pass
+
+            cursor.execute(f"""
+                SELECT * FROM link
+                WHERE 
+                    name= %s 
+                limit 1;""", 
+                (name,))
+            
+            return self.get_id(cursor.fetchone())
+
     def save_article_link(self, article_id, link_id):
         """ saves a relationship between an article and link"""
         with connection.cursor() as cursor:
@@ -147,13 +171,33 @@ class DB():
                 connection.commit()
             except pymysql.err.IntegrityError:
                 pass
-
+    
+    def save_article_author(self, article_id, author):
+        """ saves a relationship between an article and link"""
+        with connection.cursor() as cursor:
+            try:
+                logger.debug('Running save_article_author')
+                cursor.execute(f"""
+                        INSERT INTO article_author (article_id, author)
+                        VALUES (%s, %s);""", 
+                        (article_id, author))
+                connection.commit()
+            except pymysql.err.IntegrityError:
+                pass
+        
     def save_links(self, article_id):
         """ saves all links """
         logger.debug('Running save_links')
         for link, link_url in self.article.get_links().items():
             link_id = self.save_link(link, link_url)
             self.save_article_link(article_id, link_id)
+
+    def save_authors(self, article_id):
+        """ saves all authors """
+        logger.debug('Running save_authors')
+        for author in self.article.get_author():
+            author_id = self.save_author(author)
+            self.save_article_link(article_id, author_id)
 
     def save(self, topic_url):
         """Saves the article in the database"""
@@ -168,7 +212,6 @@ class DB():
                 logger.debug(f"Article alread exists. Url: {url}")
                 return
 
-        author_id = self.get_author_id()
         topic_id = self.get_topic_id(topic_url)
         text_id = self.get_text_id()
         with connection.cursor() as cursor:
@@ -179,14 +222,14 @@ class DB():
                     url, 
                     img, 
                     txt_id, 
-                    author_id, 
                     topic_id
-                ) VALUES ( %s, %s, %s, %s, %s, %s, %s );"""
+                ) VALUES ( %s, %s, %s, %s, %s, %s );"""
             
-            cursor.execute(query, (title, date, url, img, text_id, author_id, topic_id))
+            cursor.execute(query, (title, date, url, img, text_id, topic_id))
             connection.commit()
             
             cursor.execute(f'SELECT * FROM article WHERE url=%s', (url,))
-            articel_id = self.get_id(cursor.fetchone())
+            article_id = self.get_id(cursor.fetchone())
         
-        self.save_links(articel_id)
+        self.save_links(article_id)
+        self.save_authors(article_id)

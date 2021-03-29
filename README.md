@@ -1,6 +1,4 @@
-# BBCScraper
-
-![](https://raw.githubusercontent.com/yarusl/bbc_scraper/main/img/logo.png)
+# NYTimesScraper
 
 ## Main Features of the scraper
 
@@ -27,9 +25,9 @@ rel_articles: other articles linked to this article.
 ### Step1 - Clone the git repository
 To use the scraper simply download the project and go to the project main directory:
 
-`$ git clone https://github.com/yarusl/bbc_scraper.git`
+`$ git clone https://github.com/yarusl/nytimes_scraper.git`
 
-`$ cd bbc_scraper/bbc_scraper`
+`$ cd nytimes_scraper/nytimes_scraper`
 
 ##### Ensure the right permissions are in place.
 If you're using linux or mac you should run this command before running the main.py script (once it's done, you don't have to run this command anymore in the future):
@@ -86,6 +84,6 @@ Arguments for the Command Line interface:\
 
 The main issues you might face are related to the chromedriver. If you have any issues with the chromdriver it's recomended to find another one from [this link](https://chromedriver.chromium.org/downloads) and replace the existing chromedriver file with the one you download. 
 
-<b>If you found any bugs please report it on the [official report](https://github.com/yarusl/bbc_scraper/issues) </b>
+<b>If you found any bugs please report it on the [official report](https://github.com/yarusl/nytimes_scraper/issues) </b>
 
 -------------

@@ -5,15 +5,9 @@ Table article {
   r_date tinytext
   img tinytext
   txt_id int 
-  author_id int
   topic_id int
 }
 
-Table author {
-  id int [pk, increment]
-  name tinytext [not null, unique]
-  title tinytext
-}
 
 Table topic {
   id int [pk, increment]
@@ -23,22 +17,20 @@ Table topic {
 
 Table txt {
   id int [pk, increment]
-  summary text [not null, unique]
-  article_text text
+  summary text
+  article_text text [not null, unique]
 }
 
 
-Table article_tag {
+Table article_author {
   id int [pk, increment]
-  tag_id int
+  author_id int
   article_id int
 }
 
-
-Table tag {
+Table author {
   id int [pk, increment]   
   name tinytext [not null, unique]
-  url tinytext [not null, unique]
 }
 
 Table article_link {
@@ -54,12 +46,11 @@ Table link {
 }
 
 
-Ref: article.author_id > author.id 
 Ref: article.topic_id > topic.id
 Ref: txt.id - article.txt_id
 
-Ref: article_tag.article_id > article.id
-Ref: article_tag.tag_id > tag.id
+Ref: article_author.article_id > article.id
+Ref: article_author.author_id > author.id
 
 Ref: article_link.article_id > article.id
 Ref: article_link.link_id > link.id

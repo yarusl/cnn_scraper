@@ -1,5 +1,5 @@
 .DS_Store
-bbc_scraper/__init__.py
+nytimes_scraper/__init__.py
 .idea/
-bbc_scraper/__pycache__
+nytimes_scraper/__pycache__
 venv
