@@ -72,7 +72,7 @@ The second one is the silent mode. In this mode you have to specify the link to 
 <b>_settings.py_ :</b>
 <pre>mode = INTERACTIVE_MODE # SILENT_MODE
 topic_url = "https://www.bbc.com/news/wales"  # your url example: "https://www.bbc.com/news/the_reporters"
-pages_to_scrape = 1
+articles_to_scrape = 1
 </pre>
 -------------
 ## CLI usage

@@ -109,49 +109,7 @@ class DB():
         topic_name = self.get_topic_name(topic_url)
         return self.save_topic(topic_name, topic_url)
 
-    def save_tag(self, name, url):
-        """ saves one tag and returns its id """
-        logger.debug('Running save_tag')
-        with connection.cursor() as cursor:
-            try:
-                cursor.execute(f"""
-                        INSERT INTO tag (name, url)
-                        VALUES (%s, %s);""", 
-                        (name, url))
-                connection.commit()
-            except pymysql.err.IntegrityError:
-                logger.error('Integrity error raised in save_tag from db.py')
-                pass
 
-            cursor.execute(f"""
-                SELECT * FROM tag 
-                WHERE 
-                    name = %s 
-                limit 1;""", 
-                (name,))
-            
-            return self.get_id(cursor.fetchone())
-    
-    def save_article_tag(self, article_id, tag_id):
-        """ saves a relationship between a tag and article """
-        logger.debug('Running save_article_tag')
-        with connection.cursor() as cursor:
-            try:
-                cursor.execute(f"""
-                        INSERT INTO article_tag (article_id, tag_id)
-                        VALUES (%s, %s);""", 
-                    (tag_id, article_id))
-                connection.commit()
-            except pymysql.err.IntegrityError:
-                logger.error('Integrity error raised in save_article_tag from db.py')
-                pass
-
-    def save_tags(self, article_id):
-        """ saves all tags """
-        logger.debug('Running save_tags')
-        for tag, tag_url in self.article.get_tags().items():
-            tag_id = self.save_tag(tag, tag_url)
-            self.save_article_tag(article_id, tag_id)
 
     def save_link(self, name, url): 
         """ saves one link to an article and returns its id """
@@ -206,9 +164,7 @@ class DB():
 
         with connection.cursor() as cursor:
             cursor.execute(f'SELECT * FROM article WHERE url=%s', (url,))
-            adsf = cursor.fetchone()
-            if adsf != None:
-                print()
+            if cursor.fetchone() != None:
                 logger.debug(f"Article alread exists. Url: {url}")
                 return
 
@@ -233,5 +189,4 @@ class DB():
             cursor.execute(f'SELECT * FROM article WHERE url=%s', (url,))
             articel_id = self.get_id(cursor.fetchone())
         
-        self.save_tags(articel_id)
         self.save_links(articel_id)

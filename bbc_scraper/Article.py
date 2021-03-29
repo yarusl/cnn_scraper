@@ -2,6 +2,8 @@ import pymysql
 from constants import BBC_PROTOCOL
 from bs4 import BeautifulSoup as bs
 from logger import logger
+from constants import SCROLL_TO_BOTTOM, SCROLL_PAUSE_TIME
+import time
 
 class Article:
     def __init__(self, url, short_text=None):
@@ -19,14 +21,19 @@ class Article:
         """
         self.short_text = short_text
         self.url = BBC_PROTOCOL + url
-        self.author_name = None
-        self.author_pos = None
- 
+        self.authors = []
+        
+        
+        self.img = None
+        self.title = None
+        self.text = None
+        self.links = None
+
     def scrape_date(self):
         """
         scrapes the date
         """
-        return self.soup.find('dd', {"class": 'e1ojgjhb2'}).text
+        return self.soup.find('div', {"class": 'css-1lvorsa'}).span.text
    
     def scrape_title(self): 
         """
@@ -40,22 +47,10 @@ class Article:
         scrapes the main image
         """
         logger.debug('Running scrape_img')
-        images = self.soup.findAll("img", {"class": "ssrcss-evoj7m-Image ee0ct7c0"})
+        images = self.soup.findAll("img", {"class": "css-11cwn6f"})
         if not len(images):
             return None
         return images[0]["src"]
-
-    def scrape_tags(self):
-        """
-        scrapes tags related to the article
-        """
-        # BBC Related topics for this article are saved in a dict
-        logger.debug('Running scrape_tags')
-        tags = {}
-        for ele in self.soup.findAll("a", {"class": "ed0g1kj1"}):
-            tags[ele.text] = ele["href"]
-
-        return tags
 
     def scrape_text(self):
         """
@@ -63,57 +58,69 @@ class Article:
         """
         logger.debug('Running scrape_text')
         # We save the entire article text
-        text = ""
-        for text_bloc in self.soup.findAll("div", {"class": "e1xue1i83"}):
-            text += text_bloc.text
-        return text
+        return ""
+        return self.soup.find("article", {"id": "story"}).text
 
-    def scrape_author(self):
+    def scrape_authors(self):
         """
         scrapes the author
         """
         # We save the author
         logger.debug('Running scrape_author')
-        author = self.soup.find("p", {"class": "e5xb54n0"})
-        if author is not None:
-            author_name = author.strong.text
-            try:
-                author_pos = author.span.contents[2]
-            except IndexError:
-                author_pos = None
-                logger.error(f"No job position given")
-            
-            return author_name, author_pos
-        return None, None
+        parent = self.soup.find("p", {"class": "e1jsehar1"})
+        if parent is None:
+            return []
+        
+        ret = []
+        authors = parent.findAll('a')
+        for author in authors:
+            ret.append(author.text)
+        
+        return ret
 
     def scrape_links(self):
+
         """
         scrapes links to other related articles
         """
         # We save the related articles
         ret_links = {}
-        links = self.soup.findAll("li", {"class": "e1nh2i2l2"})
-        for link in links:
-            print(link.p.span.text)
-            print(links)
-            ret_links[link.p.span.text] = BBC_PROTOCOL + link.a["href"]
+        parent = self.soup.find("div", {"class": "css-1y4vkv1"})
+        if parent == None:
+            return {}
         
+        links = parent.findAll("section", {"class": "css-1xgtmq5"}) 
+        for link in links:
+            text = link.find("p", {"class": "css-1ad9klu"}).text
+            url = link.find("a", {"class": "css-1e1a8wb"})["href"]
+            ret_links[text] = url
+
         return ret_links
+
+    def scroll(self):
+        while True:
+            try:
+                driver.find_element_by_class_name("css-18n4040")
+                return
+            except:
+                pass
+            time.sleep(SCROLL_PAUSE_TIME)
+            driver.execute_script(SCROLL_TO_BOTTOM)
 
     def scrape_article(self, driver):
         """For each article that was scraped from news update, we scrape as much information as possible"""
         
         print(self.url)
         driver.get(self.url)
+        self.scroll()
         page = driver.page_source
         self.soup = bs(page, 'html.parser')
 
         self.date = self.scrape_date()
         self.title = self.scrape_title()
+        self.authors = self.scrape_authors()
         self.img = self.scrape_img()
-        self.tags = self.scrape_tags()
         self.text = self.scrape_text()
-        self.author_name, self.author_pos = self.scrape_author()
         self.links = self.scrape_links()
 
     def get_url(self):
@@ -130,31 +137,28 @@ class Article:
 
     def get_img(self):
         return self.img
-
-    def get_tags(self):
-        return self.tags
+    
     
     def get_text(self):
         return self.text
 
     def get_author(self):
-        return self.author_name, self.author_pos
+        return self.authors
     
     def get_links(self):
         return self.links
-
+    
     def __str__(self):
         return f"""
 -------------------------------------------------------------------------
 {self.title}
-Written by: {self.author_name} - {self.author_pos}
+Written by: {self.authors}
 
 {self.text}
 
 Posted date: {self.date}
 Link of the article: {self.url}
 Link to image: {self.img}
-List of tags for the article and their links {self.tags}
 List of related articles and their links {self.links}
 
 A summary to the article: {self.short_text}

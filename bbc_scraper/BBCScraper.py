@@ -1,18 +1,19 @@
 from Article import Article
-from constants import BBC_NEWS
+from constants import BBC_NEWS, SCROLL_PAUSE_TIME
 from bs4 import BeautifulSoup as bs
 from settings import DEMO
 from db import DB
+import time
 
 class BBCScraper:
-    def __init__(self, driver, topic_url, pages_to_scrape=1):
-        if pages_to_scrape <= 0:
-            raise Exception(f"Variable 'pages_to_scrape' should be at least 1. You can't scrape less than one page")
+    def __init__(self, driver, topic_url, articles_to_scrape=1):
+        if articles_to_scrape <= 0:
+            raise Exception(f"Variable 'articles_to_scrape' should be at least 1. You can't scrape less than one page")
 
         self.driver = driver
         self.topic_url = topic_url
         self.articles = []  # list of instances of class Article
-        self.pages_to_scrape = pages_to_scrape
+        self.articles_to_scrape = articles_to_scrape
         self.validate_url(topic_url)
 
     def validate_url(self, topic_url):
@@ -22,43 +23,49 @@ class BBCScraper:
         'Latest Updates' section.
         """
         # validate URL is bbc news
-
-        short_url = topic_url.lstrip('https://').lstrip('www.').rstrip('/')
-
-        if short_url[:len(BBC_NEWS)] != BBC_NEWS or 'https://' != topic_url[:8]:
+        
+        short_url = topic_url.lstrip('https://').lstrip('http://').lstrip('www.')
+        if short_url[:len(BBC_NEWS)] != BBC_NEWS:
             raise Exception("Invalid website")
-
+        
         # Check if there is a "UPDATE" section in the page
-        self.driver.get(topic_url)
+        self.driver.get('https://' + short_url)
         page = self.driver.page_source
         soup = bs(page, 'html.parser')
-        if soup.find("h2", {"id": "latest-updates"}) is None:
+        if soup.find("section", {"id": "stream-panel"}) is None:
             raise Exception('No news updates category in the page')
+
+    def scroll(self): 
+        scroll_scrip = "document.querySelector('li.css-ye6x8s:last-child').scrollIntoView({ behavior: 'smooth' });"
+        time.sleep(SCROLL_PAUSE_TIME)
+        self.driver.execute_script(scroll_scrip)
+        time.sleep(SCROLL_PAUSE_TIME)
 
     def scrape(self):
         """ 
         scrapes all the articles from 
         n-pages
         """
-        next_page = 'qa-pagination-next-page'
-
+        
         self.driver.get(self.topic_url)
-        for p in range(1, self.pages_to_scrape + 1):
-            self.articles += self.scrape_latest_updates()
-            if p != self.pages_to_scrape:
-                print("Going to the next page")
-                self.driver.find_elements_by_class_name(next_page)[0].click()
-
+        while len(self.articles) < self.articles_to_scrape:
+            self.articles = self.scrape_latest_updates()
+            self.scroll()
+        
+        self.articles = self.articles[:self.articles_to_scrape]
         # for each article present in the news update section we scrape all available data
         for article in self.articles:
-            article.scrape_article(self.driver)
+            #article.scrape_article(self.driver)
+            pass
 
         return self.articles
 
     def save(self):
         """Saves each one of the articles in the database"""
         for article in self.articles:
-            DB(article).save(self.topic_url)
+            #DB(article).save(self.topic_url)
+            pass
+            
 
     def get_text(self, el_soup):
         if el_soup is None:
@@ -81,30 +88,26 @@ class BBCScraper:
             return None
         return el_soup.text
 
+    
     def scrape_latest_updates(self):
         """
         scrapes all articles from
         the 'Latest Updates' section
         """
-        articles = []
 
+        articles = []
         soup = bs(self.driver.page_source, 'html.parser')
-        soup = soup.find("h2", {"id": "latest-updates"}).find_parent('div')
-        elements = soup.find_all("li", {"class": "lx-stream__post-container"})
+        soup = soup.find("section", {"id": "stream-panel"})
+        elements = soup.find_all("li", {"class": "css-ye6x8s"})
         for el_soup in elements:
             # FILTER articles to be scrapped
             # We will only take articles which have a url (to scrap a full content only)
             # and that are on the news section of the website
 
-            url = self.get_url(el_soup.find("a", {"class": "qa-story-cta-link"}))
-            if url is None or url[0:6] != '/news/':
-                continue
-
-            text = self.get_text(el_soup.find("p", {"class": "lx-stream-related-story--summary"}))
+            url = self.get_url(el_soup.a)
+            text = self.get_text(el_soup.p)
             articles.append(Article(url, text))
-            if DEMO:
-                break
-
+            
         return articles
 
     def __str__(self):

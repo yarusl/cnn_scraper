@@ -8,7 +8,7 @@ from logger import logger
 # Lets create a scraper to test the methods on a chosen arbitrary topic Url: here the technology section
 test_topic_url = 'https://www.bbc.com/news/technology'
 driver = create_driver(SILENT_MODE, get_driver_path())
-test_bbc_scraper = BBCScraper(driver=driver, topic_url=test_topic_url, pages_to_scrape=1)
+test_bbc_scraper = BBCScraper(driver=driver, topic_url=test_topic_url, articles_to_scrape=1)
 
 # Test of the latest update method of BBCScrapper
 try:

@@ -31,18 +31,6 @@ CREATE TABLE `txt` (
   `article_text` text UNIQUE NOT NULL
 );
 
-CREATE TABLE `article_tag` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `tag_id` int,
-  `article_id` int
-);
-
-CREATE TABLE `tag` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` tinytext UNIQUE NOT NULL,
-  `url` tinytext UNIQUE NOT NULL
-);
-
 CREATE TABLE `article_link` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `article_id` int,
