@@ -3,6 +3,7 @@ from constants import NYT_PROTOCOL
 from bs4 import BeautifulSoup as bs
 from logger import logger
 from constants import SCROLL_TO_BOTTOM, SCROLL_PAUSE_TIME
+from settings import nyt
 import time
 
 class Article:
@@ -22,8 +23,6 @@ class Article:
         self.short_text = short_text
         self.url = NYT_PROTOCOL + url
         self.authors = []
-        
-        
         self.img = None
         self.title = None
         self.text = None
@@ -96,6 +95,10 @@ class Article:
 
         return ret_links
 
+    def scrape_API(self,URL):
+        """Scrape Article's metadata from the API"""
+        print(nyt.article_metadata(url=URL))
+
     def scroll(self, driver):
         while True:
             try:
@@ -106,6 +109,7 @@ class Article:
             time.sleep(SCROLL_PAUSE_TIME)
             driver.execute_script(SCROLL_TO_BOTTOM)
 
+    # Scrape article uses all the previous class methods to scrap the maximum information on a given article
     def scrape_article(self, driver):
         """For each article that was scraped from news update, we scrape as much information as possible"""
         
@@ -122,6 +126,7 @@ class Article:
         self.text = self.scrape_text()
         self.links = self.scrape_links()
 
+    # Below we define the get methods to access the article's attributes
     def get_url(self):
         return self.url
 
@@ -136,8 +141,7 @@ class Article:
 
     def get_img(self):
         return self.img
-    
-    
+
     def get_text(self):
         return self.text
 

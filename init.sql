@@ -1,6 +1,6 @@
 DROP DATABASE nytimes;
 CREATE DATABASE nytimes;
-use nytimes;
+USE nytimes;
 
 CREATE TABLE `article` (
   `id` int PRIMARY KEY AUTO_INCREMENT,

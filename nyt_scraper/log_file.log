@@ -1,0 +1,34 @@
+2021-03-30 21:02:36,157-DEBUG-FUNC:<module>-LINE:7: Connecting to the database with pymysql
+2021-03-30 21:03:25,654-DEBUG-FUNC:<module>-LINE:7: Connecting to the database with pymysql
+2021-03-30 21:03:56,379-DEBUG-FUNC:<module>-LINE:7: Connecting to the database with pymysql
+2021-03-30 21:10:33,125-DEBUG-FUNC:<module>-LINE:7: Connecting to the database with pymysql
+2021-03-30 21:16:44,193-DEBUG-FUNC:<module>-LINE:7: Connecting to the database with pymysql
+2021-03-30 21:16:44,202-DEBUG-FUNC:main-LINE:63: Running main function
+2021-03-30 21:16:44,202-DEBUG-FUNC:create_driver-LINE:29: Running create_driver
+2021-03-30 21:16:44,202-INFO-FUNC:create_driver-LINE:36: Interactive mode chosen
+2021-03-30 21:19:12,256-DEBUG-FUNC:<module>-LINE:7: Connecting to the database with pymysql
+2021-03-30 21:19:12,261-DEBUG-FUNC:main-LINE:63: Running main function
+2021-03-30 21:19:12,261-DEBUG-FUNC:create_driver-LINE:29: Running create_driver
+2021-03-30 21:19:12,261-INFO-FUNC:create_driver-LINE:36: Interactive mode chosen
+2021-03-30 21:19:16,194-INFO-FUNC:get_available_topics-LINE:10: Scrapping the available topics
+2021-03-30 21:19:56,064-WARNING-FUNC:main-LINE:84: the interactive mode did not work on its try due a general exception: Message: element not interactable
+  (Session info: chrome=89.0.4389.90)
+
+2021-03-30 21:21:36,955-DEBUG-FUNC:<module>-LINE:7: Connecting to the database with pymysql
+2021-03-30 21:21:36,961-DEBUG-FUNC:main-LINE:63: Running main function
+2021-03-30 21:21:36,961-DEBUG-FUNC:create_driver-LINE:29: Running create_driver
+2021-03-30 21:21:36,961-INFO-FUNC:create_driver-LINE:36: Interactive mode chosen
+2021-03-30 21:21:40,364-INFO-FUNC:get_available_topics-LINE:10: Scrapping the available topics
+2021-03-30 21:27:45,331-DEBUG-FUNC:<module>-LINE:7: Connecting to the database with pymysql
+2021-03-30 21:27:45,339-DEBUG-FUNC:main-LINE:63: Running main function
+2021-03-30 21:27:45,339-DEBUG-FUNC:create_driver-LINE:29: Running create_driver
+2021-03-30 21:27:45,339-INFO-FUNC:create_driver-LINE:36: Interactive mode chosen
+2021-03-30 21:27:48,628-INFO-FUNC:get_available_topics-LINE:10: Scrapping the available topics
+2021-03-30 21:30:47,317-DEBUG-FUNC:<module>-LINE:7: Connecting to the database with pymysql
+2021-03-30 21:30:47,323-DEBUG-FUNC:main-LINE:63: Running main function
+2021-03-30 21:30:47,323-DEBUG-FUNC:create_driver-LINE:29: Running create_driver
+2021-03-30 21:30:47,323-INFO-FUNC:create_driver-LINE:36: Interactive mode chosen
+2021-03-30 21:30:50,561-INFO-FUNC:get_available_topics-LINE:10: Scrapping the available topics
+2021-03-30 21:31:32,385-WARNING-FUNC:main-LINE:84: the interactive mode did not work on its try due a general exception: Message: element not interactable
+  (Session info: chrome=89.0.4389.90)
+
