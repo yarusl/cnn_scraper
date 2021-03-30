@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from settings import mode, articles_to_scrape, topic_url
 from os import path
-from settings import driver_path, DEMO
+from settings import driver_path, DEMO, DEMO_TOPIC, DEMO_ARTICLE_SCRAP
 from interactive import (
     get_available_topics,
     topic_selector
@@ -63,11 +63,11 @@ def main():
     logger.debug("Running main function")
     global topic_url, mode, articles_to_scrape, driver_path
     driver = create_driver(mode, driver_path)
-    
+
     if mode == INTERACTIVE_MODE:
         if DEMO:
-            topic_url = 'https://www.nytimes.com/section/world/africa'
-            articles_to_scrape = 1
+            topic_url = DEMO_TOPIC
+            articles_to_scrape = DEMO_ARTICLE_SCRAP
         else: 
             try:
                 topics = get_available_topics(driver)

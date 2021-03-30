@@ -95,9 +95,19 @@ class Article:
 
         return ret_links
 
+    # Use of the API to scrape additional meta information
     def scrape_API(self,URL):
-        """Scrape Article's metadata from the API"""
-        print(nyt.article_metadata(url=URL))
+        meta = nyt.article_metadata(url=URL)[0]
+        url = URL
+        label_dict = {}
+        section = meta['section']
+        subsection = meta['subsection']
+        abstract = meta['abstract']
+        label_dict['des'] = meta['des_facet']
+        label_dict['org'] = meta['org_facet']
+        label_dict['per'] = meta['per_facet']
+        label_dict['geo'] = meta['geo_facet']
+        return url, section, subsection, abstract, label_dict
 
     def scroll(self, driver):
         while True:

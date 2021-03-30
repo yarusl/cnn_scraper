@@ -1,6 +1,7 @@
 from settings import USER, PASSWORD, HOST, DATABASE
 import pymysql
 from logger import logger
+from constants import TYPES_OF_LABELS
 
 
 # Connecting to the database
@@ -27,6 +28,38 @@ class DB():
             return fetched["id"]
         return None
 
+    def save_API(self, URL):
+        """ saves API scrapped data into an article and returns its id """
+        logger.debug('Running save_API - INTO meta')
+        url, section, subsection, abstract, label_dict = self.article.scrape_API(URL)
+        with connection.cursor() as cursor:
+            query = f"""
+                INSERT INTO meta (
+                    url, 
+                    section, 
+                    subsection, 
+                    abstract, 
+                ) VALUES ( %s, %s, %s, %s );"""
+            cursor.execute(query, (url, section, subsection, abstract))
+            connection.commit()
+
+            # We store each element of the lists of labels, with an information of its type of label (TYPES_OF_LABELS)
+            logger.debug('Running save_API - INTO label')
+            for type in TYPES_OF_LABELS:
+                for ele in label_dict[type]:
+                    with connection.cursor() as cursor:
+                        query = f"""
+                            INSERT INTO label (
+                                label_type
+                                label_content
+                            ) VALUES ( %s, %s );"""
+                        cursor.execute(query,(type,ele))
+                        connection.commit()
+
+            logger.debug('Finished commiting save_API to the SQL db')
+        return self.get_id(cursor.fetchone())
+
+
     def save_author(self, name):
         """ saves the author and returns his id """
         logger.debug('Running save_author')
@@ -43,6 +76,7 @@ class DB():
 
             cursor.execute(f"SELECT * FROM author WHERE name = %s limit 1;", (name,))
             return self.get_id(cursor.fetchone())
+
 
     def save_text(self, summary, article_text):
         """ saves text and returns its id"""
@@ -110,8 +144,7 @@ class DB():
         return self.save_topic(topic_name, topic_url)
 
 
-
-    def save_link(self, name, url): 
+    def save_link(self, name, url):
         """ saves one link to an article and returns its id """
         logger.debug('Running save_link')
         with connection.cursor() as cursor:

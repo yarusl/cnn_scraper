@@ -5,3 +5,6 @@ INTERACTIVE_MODE = 1
 
 SCROLL_PAUSE_TIME = 0.5
 SCROLL_TO_BOTTOM = "window.scrollTo(0, document.body.scrollHeight)"
+
+#types of labels available in the API
+TYPES_OF_LABELS = ['des','org','per','geo']

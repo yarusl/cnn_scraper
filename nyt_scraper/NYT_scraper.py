@@ -61,8 +61,8 @@ class NYT_scraper:
 
     def save(self):
         """Saves each one of the articles in the database"""
-        for article in self.articles:
-            DB(article).save(self.topic_url)
+    #    for article in self.articles:
+    #       DB(article).save(self.topic_url)
             
 
     def get_text(self, el_soup):

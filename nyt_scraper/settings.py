@@ -3,7 +3,9 @@ from pynytimes import NYTAPI
 mode, topic_url, articles_to_scrape, driver_path = parse_args()
 
 # For testing: If True only one article is scrapped
-DEMO = False
+DEMO = True
+DEMO_TOPIC = 'https://www.nytimes.com/section/world/africa'
+DEMO_ARTICLE_SCRAP = 3
 
 # Database details
 HOST = 'localhost'

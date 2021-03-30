@@ -56,3 +56,6 @@ Ref: article_link.article_id > article.id
 Ref: article_link.link_id > link.id
 
 //link: https://dbdiagram.io/d/604d1b38fcdcb6230b24025e
+
+
+// Michael link: https://dbdiagram.io/d/606386e3ecb54e10c33e0379
