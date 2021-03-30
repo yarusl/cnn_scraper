@@ -20,30 +20,29 @@ import sys
 
 from logger import logger
 
-
-
 def create_driver(mode, executable_path):
-    """
-    Create a Chromedriver ready for scraping with 2 modes
-    Mode by default = INTERACTIVE. Meaning we ask the user to choose the topic they want to scrape and the number of pages.
-    Other mode = SILENT. With input from the CLI the user can run the scrape directly from a URL. (see cli.py for details on usage)
-    """
-    logger.debug("Running create_driver")
-    chrome_options = Options()
+        """
+        Create a Chromedriver ready for scraping with 2 modes
+        Mode by default = INTERACTIVE. Meaning we ask the user to choose the topic they want to scrape and the number of pages.
+        Other mode = SILENT. With input from the CLI the user can run the scrape directly from a URL. (see cli.py for details on usage)
+        """
+        logger.debug("Running create_driver")
+        chrome_options = Options()
 
-    if mode == SILENT_MODE:
-        logger.info("Silent mode chosen")
-        chrome_options.add_argument("--headless")
-    elif mode == INTERACTIVE_MODE:
-        logger.info("Interactive mode chosen")
-        chrome_options.add_experimental_option("detach", True)
-    else:
-        logger.debug("Invalid mode")
-        raise Exception("Invalid mode")
-
-    return webdriver.Chrome(executable_path=executable_path, options=chrome_options)
-
-
+        if mode == SILENT_MODE:
+            logger.info("Silent mode chosen")
+            chrome_options.add_argument("--headless")
+        elif mode == INTERACTIVE_MODE:
+            logger.info("Interactive mode chosen")
+            chrome_options.add_experimental_option("detach", True)
+        else:
+            logger.debug("Invalid mode")
+            raise Exception("Invalid mode")
+        
+        driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)
+        driver.set_window_size(1000, 800)
+        return driver
+    
 def main():
     """ 
     The program has two modes. 
@@ -71,9 +70,9 @@ def main():
             articles_to_scrape = 1
         else: 
             try:
-                topic = get_available_topics(driver)
-                topic_url = topic_selector(topic)
-                articles_to_scrape = int(input("How many pages you want to scrape? "))
+                topics = get_available_topics(driver)
+                topic_url = topic_selector(topics)
+                articles_to_scrape = int(input("How many articles do you want to scrape? "))
             
             except ValueError as e:
                 logger.warning(f"the interactive mode did not work on its try due to a ValueError: {e}")
@@ -86,8 +85,8 @@ def main():
 
     nytimes_scraper = NYTimesScraper(driver, topic_url, articles_to_scrape)
     nytimes_scraper.scrape()
-    #nytimes_scraper.print_info()
-    #nytimes_scraper.save()
+    nytimes_scraper.print_info()
+    nytimes_scraper.save()
     del nytimes_scraper
 
 if __name__ == "__main__":
