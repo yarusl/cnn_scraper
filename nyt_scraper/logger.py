@@ -3,7 +3,7 @@ import settings
 import logging
 
 #LOGGING CODE
-logger = logging.getLogger(settings.BBCname)
+logger = logging.getLogger(settings.NYTname)
 logger.setLevel(logging.DEBUG)
 
 # Create Formatter

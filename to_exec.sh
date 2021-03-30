@@ -1,2 +1,2 @@
 #!/bin/bash
-chmod 755 bbc_scraper/drivers/*
+chmod 755 nytimes_scraper/drivers/*
