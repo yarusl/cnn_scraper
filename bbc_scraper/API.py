@@ -1,27 +1,5 @@
-from newsapi import NewsApiClient
-from constants import APIKEY
-import json
+from pynytimes import NYTAPI
+nyt = NYTAPI("qeOAmrE6yGzowmzGiIpoK0ZBHOnyJ8BG", https=False)
+metadata = nyt.article_metadata(url = "https://www.nytimes.com/2019/10/20/world/middleeast/erdogan-turkey-nuclear-weapons-trump.html")
+print(metadata)
 
-# Init
-newsapi = NewsApiClient(api_key=APIKEY)
-
-# /v2/top-headlines
-top_headlines = newsapi.get_top_headlines(q='bitcoin',
-                                          category='business',
-                                          language='en',
-                                          country='us')
-
-# /v2/everything
-all_articles = newsapi.get_everything(q='bitcoin',
-                                      domains='bbc.co.uk,techcrunch.com',
-                                      from_param='2021-02-28',
-                                      to='2021-03-28',
-                                      language='en',
-                                      sort_by='relevancy',
-                                      page=2)
-
-with open('data.json', 'w') as outfile:
-    json.dump(all_articles, outfile)
-
-# /v2/sources
-sources = newsapi.get_sources()
