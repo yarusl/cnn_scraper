@@ -1,5 +1,5 @@
-NYTIMES_NEWS = 'nytimes.com'
-NYTIMES_PROTOCOL = 'https://nytimes.com'
+NYT_NEWS = 'nytimes.com'
+NYT_PROTOCOL = 'https://nytimes.com'
 SILENT_MODE = 0
 INTERACTIVE_MODE = 1
 

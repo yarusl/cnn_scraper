@@ -14,4 +14,4 @@ PASSWORD = ''
 
 # Settings for the logger
 LOG = 'log_file.log'
-NYTimesname = 'scrapper'
+NYTname = 'scrapper'

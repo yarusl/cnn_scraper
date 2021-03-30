@@ -1,11 +1,11 @@
 from Article import Article
-from constants import NYTIMES_NEWS, SCROLL_PAUSE_TIME
+from constants import NYT_NEWS, SCROLL_PAUSE_TIME
 from bs4 import BeautifulSoup as bs
 from settings import DEMO
 from db import DB
 import time
 
-class NYTimesScraper:
+class NYT_scraper:
     def __init__(self, driver, topic_url, articles_to_scrape=1):
         if articles_to_scrape <= 0:
             raise Exception(f"Variable 'articles_to_scrape' should be at least 1. You can't scrape less than one page")
@@ -18,14 +18,14 @@ class NYTimesScraper:
 
     def validate_url(self, topic_url):
         """ 
-        validate if the URL is nytimes + validate if the topic is scrapable:
+        validate if the URL is nyt + validate if the topic is scrapable:
         meaning that the page has a 
         'Latest Updates' section.
         """
-        # validate URL is nytimes news
+        # validate URL is nyt news
         
         short_url = topic_url.lstrip('https://').lstrip('http://').lstrip('www.')
-        if short_url[:len(NYTIMES_NEWS)] != NYTIMES_NEWS:
+        if short_url[:len(NYT_NEWS)] != NYT_NEWS:
             raise Exception("Invalid website")
         
         # Check if there is a "UPDATE" section in the page

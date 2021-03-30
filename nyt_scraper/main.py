@@ -14,7 +14,7 @@ from constants import (
     SILENT_MODE,
     INTERACTIVE_MODE
 )
-from NYTimesScraper import NYTimesScraper
+from NYT_scraper import NYT_scraper
 
 import sys
 
@@ -83,11 +83,11 @@ def main():
             except Exception as e:
                 logger.warning(f"the interactive mode did not work on its try due a general exception: {e}")
 
-    nytimes_scraper = NYTimesScraper(driver, topic_url, articles_to_scrape)
-    nytimes_scraper.scrape()
-    nytimes_scraper.print_info()
-    nytimes_scraper.save()
-    del nytimes_scraper
+    nyt_scraper = NYT_scraper(driver, topic_url, articles_to_scrape)
+    nyt_scraper.scrape()
+    nyt_scraper.print_info()
+    nyt_scraper.save()
+    del nyt_scraper
 
 if __name__ == "__main__":
     main()

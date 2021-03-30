@@ -1,5 +1,5 @@
 import pymysql
-from constants import NYTIMES_PROTOCOL
+from constants import NYT_PROTOCOL
 from bs4 import BeautifulSoup as bs
 from logger import logger
 from constants import SCROLL_TO_BOTTOM, SCROLL_PAUSE_TIME
@@ -20,7 +20,7 @@ class Article:
         links: other articles linked to this article.
         """
         self.short_text = short_text
-        self.url = NYTIMES_PROTOCOL + url
+        self.url = NYT_PROTOCOL + url
         self.authors = []
         
         

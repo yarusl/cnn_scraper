@@ -1,4 +1,4 @@
-from constants import NYTIMES_NEWS
+from constants import NYT_NEWS
 from bs4 import BeautifulSoup as bs
 from logger import logger
 from settings import driver_path
@@ -8,7 +8,7 @@ def get_available_topics(driver):
     returns a topics list that can be scraped
     """
     logger.info("Scrapping the available topics")
-    driver.get('https://www.' + NYTIMES_NEWS)
+    driver.get('https://www.' + NYT_NEWS)
     driver.find_element_by_class_name("css-fzvsed").click()
     
     soup = bs(driver.page_source, 'html.parser')

@@ -1,4 +1,4 @@
-# NYTimesScraper
+# NYT_scraper
 
 ## Main Features of the scraper
 
