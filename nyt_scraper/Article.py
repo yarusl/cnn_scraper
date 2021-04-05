@@ -20,19 +20,24 @@ class Article:
         rel_topics: flags that say to which topics an article is related. e.g. "Tesla acquires a company". Topics will be "Electric Cars", "Elon Musk", "M and A"
         links: other articles linked to this article.
         """
+        self.short_url = url
         self.short_text = short_text
-        self.url = NYT_PROTOCOL + url
+        self.url = NYT_PROTOCOL + self.short_url
         self.authors = []
         self.img = None
         self.title = None
         self.text = None
         self.links = None
+        self.scraped_API = (None, None, None, None, None)
 
     def scrape_date(self):
         """
         scrapes the date
         """
-        return self.soup.find('div', {"class": 'css-1lvorsa'}).span.text
+        date = self.soup.find('div', {"class": 'css-1lvorsa'})
+        if date is None:
+            return None
+        return date.span.text
    
     def scrape_title(self): 
         """
@@ -96,9 +101,8 @@ class Article:
         return ret_links
 
     # Use of the API to scrape additional meta information
-    def scrape_API(self,URL):
-        meta = nyt.article_metadata(url=URL)[0]
-        url = URL
+    def scrape_API(self):
+        meta = nyt.article_metadata(url=self.short_url)[0]
         label_dict = {}
         section = meta['section']
         subsection = meta['subsection']
@@ -107,7 +111,8 @@ class Article:
         label_dict['org'] = meta['org_facet']
         label_dict['per'] = meta['per_facet']
         label_dict['geo'] = meta['geo_facet']
-        return url, section, subsection, abstract, label_dict
+        
+        return self.short_url, section, subsection, abstract, label_dict
 
     def scroll(self, driver):
         while True:
@@ -122,7 +127,8 @@ class Article:
     # Scrape article uses all the previous class methods to scrap the maximum information on a given article
     def scrape_article(self, driver):
         """For each article that was scraped from news update, we scrape as much information as possible"""
-        
+        self.scraped_API = self.scrape_API()
+
         print(self.url)
         driver.get(self.url)
         self.scroll(driver)
@@ -135,7 +141,7 @@ class Article:
         self.img = self.scrape_img()
         self.text = self.scrape_text()
         self.links = self.scrape_links()
-
+        
     # Below we define the get methods to access the article's attributes
     def get_url(self):
         return self.url
@@ -178,3 +184,17 @@ A summary to the article: {self.short_text}
 -------------------------------------------------------------------------
 
 """
+
+
+if __name__ == '__main__':
+    from settings import mode, articles_to_scrape, topic_url
+    from settings import driver_path, DEMO, DEMO_TOPIC, DEMO_ARTICLE_SCRAP
+    from main import create_driver
+    from db import DB
+    
+    url = "/2019/10/20/world/middleeast/erdogan-turkey-nuclear-weapons-trump.html"
+    driver = create_driver(mode, driver_path)
+    article = Article(url)
+    article.scrape_article(driver)
+    driver.close()
+    DB(article).save("/world/africa")

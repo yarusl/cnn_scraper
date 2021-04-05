@@ -1,3 +1,7 @@
+drop database nytimes;
+create database nytimes;
+use nytimes;
+
 CREATE TABLE `article` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `url` tinytext UNIQUE NOT NULL,
@@ -17,8 +21,8 @@ CREATE TABLE `topic` (
 
 CREATE TABLE `txt` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `summary` text,
-  `article_text` text UNIQUE NOT NULL
+  `summary` blob,
+  `article_text` blob UNIQUE NOT NULL
 );
 
 CREATE TABLE `article_author` (

@@ -31,7 +31,7 @@ class DB():
     def save_API(self, URL):
         """ saves API scrapped data into an article and returns its id """
         logger.debug('Running save_API - INTO meta')
-        url, section, subsection, abstract, label_dict = self.article.scrape_API(URL)
+        url, section, subsection, abstract, label_dict = self.article.scraped_API
         with connection.cursor() as cursor:
             query = f"""
                 INSERT INTO meta (
@@ -50,7 +50,7 @@ class DB():
                     with connection.cursor() as cursor:
                         query = f"""
                             INSERT INTO label (
-                                label_type
+                                label_type  
                                 label_content
                             ) VALUES ( %s, %s );"""
                         cursor.execute(query,(type,ele))
@@ -238,6 +238,7 @@ class DB():
         title = self.article.get_title() 
         date = self.article.get_date()
         img = self.article.get_img()
+        self.save_API(url)
 
         with connection.cursor() as cursor:
             cursor.execute(f'SELECT * FROM article WHERE url=%s', (url,))
@@ -266,3 +267,4 @@ class DB():
         
         self.save_links(article_id)
         self.save_authors(article_id)
+        

@@ -85,7 +85,7 @@ def main():
 
     nyt_scraper = NYT_scraper(driver, topic_url, articles_to_scrape)
     nyt_scraper.scrape()
-    nyt_scraper.print_info()
+    #nyt_scraper.print_info()
     nyt_scraper.save()
     del nyt_scraper
 
