@@ -10,6 +10,11 @@ from interactive import (
     get_available_topics,
     topic_selector
 )
+
+from settings import mode, articles_to_scrape, topic_url
+from settings import driver_path, DEMO, DEMO_TOPIC, DEMO_ARTICLE_SCRAP
+from db import DB
+
 from logger import logger
 from settings import DEMO, DEMO_TOPIC, DEMO_ARTICLE_SCRAP
 
