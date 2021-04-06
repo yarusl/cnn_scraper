@@ -34,12 +34,13 @@ def create_driver(mode, executable_path):
         elif mode == INTERACTIVE_MODE:
             logger.info("Interactive mode chosen")
             chrome_options.add_experimental_option("detach", True)
+            chrome_options.add_argument("--headless")
         else:
             logger.debug("Invalid mode")
             raise Exception("Invalid mode")
         
         driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)
-        driver.set_window_size(1000, 800)
+        #driver.set_window_size(1000, 800)
         return driver
     
 def main():
