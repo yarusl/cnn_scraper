@@ -13,7 +13,7 @@ DATABASE = 'nytimes'
 
 # your variables
 USER = 'root'
-PASSWORD = ''
+PASSWORD = 'futur((('
 
 # Settings for the logger
 LOG = 'log_file.log'

@@ -1,24 +1,18 @@
-import logging
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from settings import mode, articles_to_scrape, topic_url
-from os import path
-from settings import driver_path, DEMO, DEMO_TOPIC, DEMO_ARTICLE_SCRAP
-from interactive import (
-    get_available_topics,
-    topic_selector
-)
 
+from NYT_scraper import NYT_scraper
 from constants import (
     SILENT_MODE,
     INTERACTIVE_MODE
 )
-from NYT_scraper import NYT_scraper
-
-import sys
-
+from interactive import (
+    get_available_topics,
+    topic_selector
+)
 from logger import logger
+from settings import DEMO, DEMO_TOPIC, DEMO_ARTICLE_SCRAP
+
 
 def create_driver(mode, executable_path):
         """
