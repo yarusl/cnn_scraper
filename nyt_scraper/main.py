@@ -33,7 +33,7 @@ def create_driver(mode, executable_path):
             chrome_options.add_argument("--headless")
         elif mode == INTERACTIVE_MODE:
             logger.info("Interactive mode chosen")
-            chrome_options.add_experimental_option("detach", True)
+           # chrome_options.add_experimental_option("detach", True)
             chrome_options.add_argument("--headless")
         else:
             logger.debug("Invalid mode")
