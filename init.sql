@@ -2,9 +2,20 @@ drop database nytimes;
 create database nytimes;
 use nytimes;
 
+CREATE TABLE `author` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(500) UNIQUE NOT NULL
+);
+
+CREATE TABLE `txt` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `summary` MEDIUMBLOB,
+  `article_text` BLOB NOT NULL
+);
+
 CREATE TABLE `article` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `url` tinytext UNIQUE NOT NULL,
+  `url` varchar(400) UNIQUE NOT NULL,
   `title` tinytext,
   `r_date` tinytext,
   `img` tinytext,
@@ -15,15 +26,10 @@ CREATE TABLE `article` (
 
 CREATE TABLE `topic` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` tinytext UNIQUE NOT NULL,
-  `url` tinytext UNIQUE NOT NULL
+  `name` varchar(400) UNIQUE NOT NULL,
+  `url` varchar(400) UNIQUE NOT NULL
 );
 
-CREATE TABLE `txt` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `summary` blob,
-  `article_text` blob UNIQUE NOT NULL
-);
 
 CREATE TABLE `article_author` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
@@ -51,11 +57,6 @@ CREATE TABLE `article_label` (
   `article_id` int
 );
 
-CREATE TABLE `author` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` tinytext UNIQUE NOT NULL
-);
-
 CREATE TABLE `article_link` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `article_id` int,
@@ -64,8 +65,8 @@ CREATE TABLE `article_link` (
 
 CREATE TABLE `link` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` tinytext,
-  `url` tinytext
+  `name` varchar(500),
+  `url` varchar(500)
 );
 
 ALTER TABLE `article` ADD FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id`);
