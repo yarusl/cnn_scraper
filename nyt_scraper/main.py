@@ -1,5 +1,5 @@
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
 
 from NYT_scraper import NYT_scraper
 from constants import (
@@ -40,7 +40,7 @@ def create_driver(mode, executable_path):
             raise Exception("Invalid mode")
         
         driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)
-        #driver.set_window_size(1000, 800)
+        driver.set_window_size(1000, 800)
         return driver
     
 def main():
