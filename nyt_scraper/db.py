@@ -38,24 +38,10 @@ class DB():
                     url, 
                     section, 
                     subsection, 
-                    abstract, 
+                    abstract 
                 ) VALUES ( %s, %s, %s, %s );"""
             cursor.execute(query, (url, section, subsection, abstract))
             connection.commit()
-
-            # We store each element of the lists of labels, with an information of its type of label (TYPES_OF_LABELS)
-            logger.debug('Running save_API - INTO label')
-            for type in TYPES_OF_LABELS:
-                for ele in label_dict[type]:
-                    with connection.cursor() as cursor:
-                        query = f"""
-                            INSERT INTO label (
-                                label_type  
-                                label_content
-                            ) VALUES ( %s, %s );"""
-                        cursor.execute(query,(type,ele))
-                        connection.commit()
-
             logger.debug('Finished commiting save_API to the SQL db')
         return self.get_id(cursor.fetchone())
 
@@ -238,7 +224,6 @@ class DB():
         title = self.article.get_title() 
         date = self.article.get_date()
         img = self.article.get_img()
-        self.save_API(url)
 
         with connection.cursor() as cursor:
             cursor.execute(f'SELECT * FROM article WHERE url=%s', (url,))
@@ -264,7 +249,6 @@ class DB():
             
             cursor.execute(f'SELECT * FROM article WHERE url=%s', (url,))
             article_id = self.get_id(cursor.fetchone())
-        
+        self.save_API(url)
         self.save_links(article_id)
         self.save_authors(article_id)
-        
