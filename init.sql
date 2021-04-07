@@ -28,7 +28,7 @@ CREATE TABLE `topic` (
 CREATE TABLE `txt` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `summary` blob, 
-  `article_text` lognblob
+  `article_text` longblob
 );
 
 CREATE TABLE `article_tag` (
