@@ -79,7 +79,7 @@ class Article:
         logger.debug('Running scrape_author')
         author = self.soup.find("p", {"class": "e5xb54n0"})
         if author is not None:
-            author_name = author.strong.text
+            author_name = author.strong.text.lstrip('By')
             try:
                 author_pos = author.span.contents[2]
             except IndexError:
