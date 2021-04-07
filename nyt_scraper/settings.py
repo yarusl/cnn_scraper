@@ -3,7 +3,7 @@ from pynytimes import NYTAPI
 mode, topic_url, articles_to_scrape, driver_path = parse_args()
 
 # For testing: If True only one article is scrapped
-DEMO = True
+DEMO = False
 DEMO_TOPIC = 'https://www.nytimes.com/section/world/africa'
 DEMO_ARTICLE_SCRAP = 1
 
@@ -13,7 +13,7 @@ DATABASE = 'nytimes'
 
 # your variables
 USER = 'root'
-PASSWORD = 'root'
+PASSWORD = 'futur((('
 
 # Settings for the logger
 LOG = 'log_file.log'

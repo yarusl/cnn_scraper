@@ -1,0 +1,72 @@
+2021-04-06 17:12:10,738-DEBUG-FUNC:<module>-LINE:8: Connecting to the database with pymysql
+2021-04-06 17:12:27,732-DEBUG-FUNC:<module>-LINE:8: Connecting to the database with pymysql
+2021-04-06 17:12:27,738-DEBUG-FUNC:main-LINE:63: Running main function
+2021-04-06 17:12:27,738-DEBUG-FUNC:create_driver-LINE:28: Running create_driver
+2021-04-06 17:12:27,738-INFO-FUNC:create_driver-LINE:35: Interactive mode chosen
+2021-04-06 17:12:30,352-INFO-FUNC:get_available_topics-LINE:10: Scrapping the available topics
+2021-04-06 17:14:15,888-DEBUG-FUNC:<module>-LINE:8: Connecting to the database with pymysql
+2021-04-06 17:14:15,897-DEBUG-FUNC:main-LINE:63: Running main function
+2021-04-06 17:14:15,898-DEBUG-FUNC:create_driver-LINE:28: Running create_driver
+2021-04-06 17:14:15,898-INFO-FUNC:create_driver-LINE:35: Interactive mode chosen
+2021-04-06 17:14:17,823-INFO-FUNC:get_available_topics-LINE:10: Scrapping the available topics
+2021-04-06 17:17:07,879-DEBUG-FUNC:<module>-LINE:8: Connecting to the database with pymysql
+2021-04-06 17:17:07,890-DEBUG-FUNC:main-LINE:63: Running main function
+2021-04-06 17:17:07,890-DEBUG-FUNC:create_driver-LINE:28: Running create_driver
+2021-04-06 17:17:07,890-INFO-FUNC:create_driver-LINE:35: Interactive mode chosen
+2021-04-06 17:17:09,717-INFO-FUNC:get_available_topics-LINE:10: Scrapping the available topics
+2021-04-06 17:19:07,504-DEBUG-FUNC:scrape_authors-LINE:72: Running scrape_author
+2021-04-06 17:19:07,507-DEBUG-FUNC:scrape_img-LINE:53: Running scrape_img
+2021-04-06 17:19:07,511-DEBUG-FUNC:scrape_text-LINE:63: Running scrape_text
+2021-04-06 17:26:26,223-DEBUG-FUNC:<module>-LINE:8: Connecting to the database with pymysql
+2021-04-06 17:26:26,236-DEBUG-FUNC:main-LINE:63: Running main function
+2021-04-06 17:26:26,236-DEBUG-FUNC:create_driver-LINE:28: Running create_driver
+2021-04-06 17:26:26,236-INFO-FUNC:create_driver-LINE:35: Interactive mode chosen
+2021-04-06 17:26:28,097-INFO-FUNC:get_available_topics-LINE:10: Scrapping the available topics
+2021-04-06 17:28:10,656-DEBUG-FUNC:scrape_authors-LINE:72: Running scrape_author
+2021-04-06 17:28:10,657-DEBUG-FUNC:scrape_img-LINE:53: Running scrape_img
+2021-04-06 17:28:10,660-DEBUG-FUNC:scrape_text-LINE:63: Running scrape_text
+2021-04-06 17:28:10,668-DEBUG-FUNC:save_topic-LINE:88: Running save_topics
+2021-04-06 17:28:10,674-DEBUG-FUNC:save_text-LINE:69: Running save_text
+2021-04-06 17:28:10,682-DEBUG-FUNC:save_API-LINE:33: Running save_API - INTO meta
+2021-04-06 17:28:10,689-DEBUG-FUNC:save_API-LINE:45: Finished commiting save_API to the SQL db
+2021-04-06 17:28:10,689-DEBUG-FUNC:save_links-LINE:209: Running save_links
+2021-04-06 17:28:10,689-DEBUG-FUNC:save_link-LINE:135: Running save_link
+2021-04-06 17:28:10,692-DEBUG-FUNC:save_article_link-LINE:185: Running save_article_links
+2021-04-06 17:28:10,694-DEBUG-FUNC:save_link-LINE:135: Running save_link
+2021-04-06 17:28:10,695-DEBUG-FUNC:save_article_link-LINE:185: Running save_article_links
+2021-04-06 17:28:10,697-DEBUG-FUNC:save_link-LINE:135: Running save_link
+2021-04-06 17:28:10,701-DEBUG-FUNC:save_article_link-LINE:185: Running save_article_links
+2021-04-06 17:28:10,702-DEBUG-FUNC:save_authors-LINE:216: Running save_authors
+2021-04-06 17:28:10,702-DEBUG-FUNC:save_author-LINE:159: Running save_author
+2021-04-06 17:28:10,705-DEBUG-FUNC:save_article_link-LINE:185: Running save_article_links
+2021-04-06 17:40:43,801-DEBUG-FUNC:<module>-LINE:8: Connecting to the database with pymysql
+2021-04-06 17:40:43,816-DEBUG-FUNC:main-LINE:63: Running main function
+2021-04-06 17:40:43,816-DEBUG-FUNC:create_driver-LINE:28: Running create_driver
+2021-04-06 17:40:43,816-INFO-FUNC:create_driver-LINE:35: Interactive mode chosen
+2021-04-06 17:40:54,518-DEBUG-FUNC:<module>-LINE:8: Connecting to the database with pymysql
+2021-04-06 17:40:54,522-DEBUG-FUNC:main-LINE:63: Running main function
+2021-04-06 17:40:54,522-DEBUG-FUNC:create_driver-LINE:28: Running create_driver
+2021-04-06 17:40:54,523-INFO-FUNC:create_driver-LINE:35: Interactive mode chosen
+2021-04-06 17:40:56,846-INFO-FUNC:get_available_topics-LINE:10: Scrapping the available topics
+2021-04-06 17:43:19,552-DEBUG-FUNC:<module>-LINE:8: Connecting to the database with pymysql
+2021-04-06 17:43:19,561-DEBUG-FUNC:main-LINE:63: Running main function
+2021-04-06 17:43:19,561-DEBUG-FUNC:create_driver-LINE:28: Running create_driver
+2021-04-06 17:43:19,561-INFO-FUNC:create_driver-LINE:35: Interactive mode chosen
+2021-04-06 17:43:21,551-INFO-FUNC:get_available_topics-LINE:10: Scrapping the available topics
+2021-04-06 17:43:54,069-DEBUG-FUNC:scrape_authors-LINE:72: Running scrape_author
+2021-04-06 17:43:54,072-DEBUG-FUNC:scrape_img-LINE:53: Running scrape_img
+2021-04-06 17:43:54,075-DEBUG-FUNC:scrape_text-LINE:63: Running scrape_text
+2021-04-06 17:43:54,080-DEBUG-FUNC:save_topic-LINE:88: Running save_topics
+2021-04-06 17:43:54,088-DEBUG-FUNC:save_text-LINE:69: Running save_text
+2021-04-06 17:43:54,093-DEBUG-FUNC:save_API-LINE:33: Running save_API - INTO meta
+2021-04-06 17:43:54,095-DEBUG-FUNC:save_API-LINE:45: Finished commiting save_API to the SQL db
+2021-04-06 17:43:54,095-DEBUG-FUNC:save_links-LINE:209: Running save_links
+2021-04-06 17:43:54,095-DEBUG-FUNC:save_link-LINE:135: Running save_link
+2021-04-06 17:43:54,097-DEBUG-FUNC:save_article_link-LINE:185: Running save_article_links
+2021-04-06 17:43:54,099-DEBUG-FUNC:save_link-LINE:135: Running save_link
+2021-04-06 17:43:54,101-DEBUG-FUNC:save_article_link-LINE:185: Running save_article_links
+2021-04-06 17:43:54,102-DEBUG-FUNC:save_link-LINE:135: Running save_link
+2021-04-06 17:43:54,104-DEBUG-FUNC:save_article_link-LINE:185: Running save_article_links
+2021-04-06 17:43:54,105-DEBUG-FUNC:save_authors-LINE:216: Running save_authors
+2021-04-06 17:43:54,105-DEBUG-FUNC:save_author-LINE:159: Running save_author
+2021-04-06 17:43:54,109-DEBUG-FUNC:save_article_link-LINE:185: Running save_article_links
