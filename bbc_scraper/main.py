@@ -33,13 +33,15 @@ def create_driver(mode, executable_path):
 
     if mode == SILENT_MODE:
         logger.info("Silent mode chosen")
-        chrome_options.add_argument("--headless")
     elif mode == INTERACTIVE_MODE:
         logger.info("Interactive mode chosen")
         chrome_options.add_experimental_option("detach", True)
     else:
         logger.debug("Invalid mode")
         raise Exception("Invalid mode")
+
+    if not DEMO:
+        chrome_options.add_argument("--headless")
 
     return webdriver.Chrome(executable_path=executable_path, options=chrome_options)
 

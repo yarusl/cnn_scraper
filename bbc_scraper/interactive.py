@@ -25,15 +25,15 @@ def topic_selector(topics):
     displays to the user available topics 
     and return the one that the user has selected
     """
-    logger.info("\nThe available topics are:")
+    print("\nThe available topics are:")
 
     for i in range(1, len(topics)):
-        logger.info(i, "-", topics[i])
+        print(i, "-", topics[i])
 
     chosen_topic_no = "-1"
     while not chosen_topic_no.isdigit or (int(chosen_topic_no) not in range(len(topics))):
         chosen_topic_no = input("Which topic would you like to scrap? \nSelect the topic number: ")
 
     topic_url = 'https://www.' + BBC_NEWS + '/' + topics[int(chosen_topic_no)] + '/'
-    logger.info('Topic url is', topic_url)
+    print('Topic url is', topic_url)
     return topic_url

@@ -120,7 +120,7 @@ class DB():
                         (name, url))
                 connection.commit()
             except pymysql.err.IntegrityError:
-                logger.error('Integrity error raised in save_tag from db.py')
+                logger.error('Integrity warning raised in save_tag from db.py')
                 pass
 
             cursor.execute(f"""
@@ -143,7 +143,7 @@ class DB():
                     (tag_id, article_id))
                 connection.commit()
             except pymysql.err.IntegrityError:
-                logger.error('Integrity error raised in save_article_tag from db.py')
+                logger.error('Integrity warning raised in save_article_tag from db.py')
                 pass
 
     def save_tags(self, article_id):
@@ -165,7 +165,7 @@ class DB():
                     (name, url))
                 connection.commit()
             except pymysql.err.IntegrityError:
-                logger.error('Integrity error raised in save_link from db.py')
+                logger.error('Integrity warning raised in save_link from db.py')
                 pass
 
             cursor.execute(f"""

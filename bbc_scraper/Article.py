@@ -26,7 +26,10 @@ class Article:
         """
         scrapes the date
         """
-        return self.soup.find('dd', {"class": 'e1ojgjhb2'}).text
+        date = self.soup.find('dd', {"class": 'e1ojgjhb2'})
+        if date is None:
+            return None
+        return date.text
    
     def scrape_title(self): 
         """
