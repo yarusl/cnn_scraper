@@ -4,7 +4,7 @@ USE bbc_scraper;
 
 CREATE TABLE `article` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `url` tinytext UNIQUE NOT NULL,
+  `url` varchar(1000) UNIQUE NOT NULL,
   `title` tinytext,
   `r_date` tinytext,
   `img` tinytext,
@@ -15,20 +15,20 @@ CREATE TABLE `article` (
 
 CREATE TABLE `author` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` tinytext UNIQUE NOT NULL,
+  `name` varchar(1000) UNIQUE NOT NULL,
   `title` tinytext
 );
 
 CREATE TABLE `topic` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` tinytext UNIQUE NOT NULL,
-  `url` tinytext UNIQUE NOT NULL
+  `name` varchar(1000) UNIQUE NOT NULL,
+  `url` varchar(1000) UNIQUE NOT NULL
 );
 
 CREATE TABLE `txt` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `summary` text, 
-  `article_text` text UNIQUE NOT NULL
+  `article_text` text
 );
 
 CREATE TABLE `article_tag` (
@@ -39,8 +39,8 @@ CREATE TABLE `article_tag` (
 
 CREATE TABLE `tag` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` tinytext UNIQUE NOT NULL,
-  `url` tinytext UNIQUE NOT NULL
+  `name` varchar(1000) UNIQUE NOT NULL,
+  `url` varchar(1000) UNIQUE NOT NULL
 );
 
 CREATE TABLE `article_link` (
@@ -51,8 +51,8 @@ CREATE TABLE `article_link` (
 
 CREATE TABLE `link` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` tinytext, 
-  `url` tinytext
+  `name` varchar(1000), 
+  `url` varchar(1000)
 );
 
 ALTER TABLE `article` ADD FOREIGN KEY (`author_id`) REFERENCES `author` (`id`);
