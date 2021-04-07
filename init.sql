@@ -5,7 +5,7 @@ USE bbc_scraper;
 CREATE TABLE `article` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `url` varchar(1000) UNIQUE NOT NULL,
-  `title` tinytext,
+  `title` blob,
   `r_date` tinytext,
   `img` tinytext,
   `txt_id` int,
@@ -27,8 +27,8 @@ CREATE TABLE `topic` (
 
 CREATE TABLE `txt` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `summary` text, 
-  `article_text` text
+  `summary` blob, 
+  `article_text` lognblob
 );
 
 CREATE TABLE `article_tag` (
